@@ -22,6 +22,11 @@ fun main() {
     val demo = Demo(MutableList<String>(10){"a"})
     println(demo.size)
     println(demo.listToString)
+
+    val jack = User(name = "Jack", age = 1)
+    val olderJack = jack.copy(age = 2)
+    val (name, age) = jack
+    println("$name, $age years of age") // 输出 "Jane, 35 years of age"
 }
 
 
@@ -55,3 +60,50 @@ class Demo(val aList: MutableList<String>) {
             aList.add(value)
         }
 }
+
+interface Named {
+    val name: String
+}
+
+interface People : Named {
+    val firstName: String
+    val lastName: String
+
+    override val name: String get() = "$firstName $lastName"
+}
+
+class Employee(
+        // 不必实现“name”
+        override val firstName: String,
+        override val lastName: String
+) : People
+
+
+data class User(val name: String = "", val age: Int = 0)
+
+sealed class Expr
+data class Const(val number: Double) : Expr()
+data class Sum(val e1: Expr, val e2: Expr) : Expr()
+
+fun eval(expr: Expr): Double = when(expr) {
+    is Const -> expr.number
+    is Sum -> eval(expr.e1) + eval(expr.e2)
+    // 不再需要 `else` 子句，因为我们已经覆盖了所有的情况
+}
+
+enum class ProtocolState {
+    WAITING {
+        override fun signal() = TALKING
+    },
+
+    TALKING {
+        override fun signal() = WAITING
+    };
+
+    abstract fun signal(): ProtocolState
+}
+
+class Box<T>(t: T) {
+    var value = t
+}
+val box: Box<Int> = Box<Int>(1)
