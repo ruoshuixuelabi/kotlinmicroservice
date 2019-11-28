@@ -27,6 +27,12 @@ fun main() {
     val olderJack = jack.copy(age = 2)
     val (name, age) = jack
     println("$name, $age years of age") // 输出 "Jane, 35 years of age"
+
+    copyValue()
+
+    val arrayNulls = arrayOfNulls<Any>(2)
+    fill(arrayNulls, "hello")
+    println(arrayNulls.asList())
 }
 
 
@@ -107,3 +113,40 @@ class Box<T>(t: T) {
     var value = t
 }
 val box: Box<Int> = Box<Int>(1)
+
+interface Source<out T> {
+    fun nextT(): T
+}
+
+fun demo(strs: Source<String>) {
+    val objects: Source<Any> = strs // 这个没问题，因为 T 是一个 out-参数
+}
+
+interface Comparable<in T> {
+    operator fun compareTo(other: T): Int
+}
+
+fun demo(x: Comparable<Number>) {
+    x.compareTo(1.0) // 1.0 拥有类型 Double，它是 Number 的子类型
+    // 因此，我们可以将 x 赋给类型为 Comparable <Double> 的变量
+    val y: Comparable<Double> = x // OK！
+}
+
+fun copy(from: Array<out Any>, to: Array<Any>) {
+    assert(from.size == to.size)
+    for (i in from.indices)
+        to[i] = from[i]
+}
+fun copyValue() {
+    val ints: Array<Int> = arrayOf(1, 2, 3)
+    val any = Array<Any>(3) { "" }
+    copy(ints, any)
+    println(any.asList())
+    //   ^ 其类型为 Array<Int> 但此处期望 Array<Any>
+}
+
+fun fill(dest: Array<in String>, value: String) {
+    for(i in dest.indices){
+        dest[i] = value
+    }
+}
