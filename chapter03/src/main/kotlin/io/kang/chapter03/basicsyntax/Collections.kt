@@ -80,4 +80,76 @@ fun main() {
     sourceList.add(4)
     println(referenceList) // 显示 sourceList 当前状态
 
+    //iterator
+    val numberStrs = listOf("one", "two", "three", "four")
+    numberStrs.forEach {
+        println(it)
+    }
+
+    for (item in numberStrs) {
+        println(item)
+    }
+
+    numberStrs.forEach {
+        println(it)
+    }
+
+    //mutableIterator
+    val numberStrs1 = mutableListOf("one", "two", "three", "four")
+    val mutableIterator = numberStrs1.iterator()
+
+    mutableIterator.next()
+    mutableIterator.remove()
+    println("After removal: $numberStrs1")
+
+    //
+    val mutableListIterator = numberStrs1.listIterator()
+
+    mutableListIterator.next()
+    mutableListIterator.add("two")
+    mutableListIterator.next()
+    mutableListIterator.set("three")
+    println(numberStrs1)
+
+
+    for (i in 1 until 10 step 2) {       // i in [1, 10), 10 is excluded
+        print(i)
+    }
+
+    val rangeInt = 1..10 step 2
+    println(3 in rangeInt)
+    println(2 !in rangeInt)
+
+
+    val numbersSequence = sequenceOf("four", "three", "two", "one")
+    val numbersSequence1 = numbers.asSequence()
+
+    //函数构建
+    val oddNumbers = generateSequence(1) { it + 2 } // `it` is the previous element
+    println(oddNumbers.take(5).toList())
+
+    //限长序列
+    val oddNumbersLessThan10 = generateSequence(1) { if (it < 10) it + 2 else null }
+    println(oddNumbersLessThan10.count())
+
+    val oddNumbers1 = sequence {
+        yield(1)
+        yieldAll(listOf(3, 5))
+        yieldAll(generateSequence(7) { it + 2 })
+    }
+    println(oddNumbers1.take(5).toList())
+
+
+    val words = "The quick brown fox jumps over the lazy dog".split(" ")
+    //convert the List to a Sequence
+    val wordsSequence = words.asSequence()
+
+    val lengthsSequence = wordsSequence.filter { println("filter: $it"); it.length > 3 }
+            .map { println("length: ${it.length}"); it.length }
+            .take(4)
+
+    println("Lengths of first 4 words longer than 3 chars")
+    // terminal operation: obtaining the result as a List
+    println(lengthsSequence.toList())
+
 }
