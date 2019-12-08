@@ -89,4 +89,131 @@ fun main() {
 
     println(numbers6.groupBy { it.first().toUpperCase() })
     println(numbers6.groupBy(keySelector = { it.first() }, valueTransform = { it.toUpperCase() }))
+    
+    //slice
+    val numbers7 = listOf("one", "two", "three", "four", "five", "six")
+    println(numbers7.slice(1..3))
+    println(numbers7.slice(0..4 step 2))
+    println(numbers7.slice(setOf(3, 5, 0)))
+
+    //take,drop
+    val numbers8 = listOf("one", "two", "three", "four", "five", "six")
+    println(numbers8.take(3))
+    println(numbers8.takeLast(3))
+    println(numbers8.drop(1))
+    println(numbers8.dropLast(5))
+
+    println(numbers8.takeWhile { !it.startsWith('f') })
+    println(numbers8.takeLastWhile { it != "three" })
+    println(numbers8.dropWhile { it.length == 3 })
+    println(numbers8.dropLastWhile { it.contains('i') })
+
+    //chunked
+    val numbers9 = (0..13).toList()
+    println(numbers9.chunked(3))
+    println(numbers9.chunked(3) { it.sum() })  // `it` is a chunk of the original collection
+
+    //windowed
+    val numbers10 = (1..10).toList()
+    println(numbers10.windowed(3))
+    println(numbers10.windowed(3, step = 2, partialWindows = true))
+    println(numbers10.windowed(3) { it.sum() })
+    println(numbers10.zipWithNext())
+    println(numbers10.zipWithNext() { s1, s2 -> s1 + s2})
+
+    //sorted
+    class Version(val major: Int, val minor: Int): Comparable<Version> {
+        override fun compareTo(other: Version): Int {
+            if (this.major != other.major) {
+                return this.major - other.major
+            } else if (this.minor != other.minor) {
+                return this.minor - other.minor
+            } else return 0
+        }
+    }
+    println(Version(1, 2) > Version(1, 3))
+    println(Version(2, 0) > Version(1, 5))
+
+    val unSortednumbers = listOf("one", "two", "three", "four")
+
+    val lengthComparator = Comparator { str1: String, str2: String -> str1.length - str2.length }
+    println(unSortednumbers.sortedWith(lengthComparator))
+    println(unSortednumbers.sortedWith(compareBy { it.length }))
+
+
+    println("Sorted ascending: ${unSortednumbers.sorted()}")
+    println("Sorted descending: ${unSortednumbers.sortedDescending()}")
+
+    val sortedNumbers = unSortednumbers.sortedBy { it.length }
+    println("Sorted by length ascending: $sortedNumbers")
+    val sortedByLast = unSortednumbers.sortedByDescending { it.last() }
+    println("Sorted by the last letter descending: $sortedByLast")
+    println(unSortednumbers.reversed())
+    println(unSortednumbers.shuffled())
+
+    //merge
+    val numbersMerge = listOf(6, 42, 10, 4)
+
+    println("Count: ${numbersMerge.count()}")
+    println("Max: ${numbersMerge.max()}")
+    println("Min: ${numbersMerge.min()}")
+    println("Average: ${numbersMerge.average()}")
+    println("Sum: ${numbersMerge.sum()}")
+    val min3Remainder = numbersMerge.minBy { it % 3 }
+    println(min3Remainder)
+    val max3Remainder = numbersMerge.maxWith(compareBy { it - 10 })
+    println(max3Remainder)
+    println(numbersMerge.sumBy { it * 2 })
+    println(numbersMerge.sumByDouble { it.toDouble() / 2 })
+
+    val sum = numbersMerge.reduce { sum, element -> sum + element }
+    println(sum)
+    val sumDoubled = numbersMerge.fold(0) { sum, element -> sum + element * 2 }
+    println(sumDoubled)
+
+    //list operation
+    val listNuumbers = listOf(1, 2, 3, 2)
+    println(listNuumbers.get(0))
+    println(listNuumbers[0])
+    //numbers.get(5)                         // exception!
+    println(listNuumbers.getOrNull(5))             // null
+    println(listNuumbers.getOrElse(5, {it}))        // 5
+    println(listNuumbers.subList(0, 2))
+    println(listNuumbers.indexOf(2))
+    println(listNuumbers.lastIndexOf(2))
+    println(listNuumbers.indexOfFirst { it > 2})
+    println(listNuumbers.indexOfLast { it % 2 == 1})
+
+    listNuumbers.sorted()
+    println(listNuumbers.binarySearch(2))  // 3
+    println(listNuumbers.binarySearch(4)) // -5
+    println(listNuumbers.binarySearch(1, 0, 2))  // -3
+
+    //set
+    val setNnumbers = setOf("one", "two", "three")
+
+    println(setNnumbers union setOf("four", "five"))
+
+    println(setNnumbers intersect setOf("two", "one"))
+    println(setNnumbers subtract setOf("three", "four"))
+    println(setNnumbers subtract setOf("four", "three")) // same output
+
+    //map
+    val mapNumbers = mapOf("one" to 1, "two" to 2, "three" to 3)
+    println(mapNumbers.get("one"))
+    println(mapNumbers["one"])
+    println(mapNumbers.getOrDefault("four", 10))
+    println(mapNumbers["five"])               // null
+
+    println(mapNumbers.keys)
+    println(mapNumbers.values)
+    println(mapNumbers.filter { (key, value) -> key.endsWith("1") && value > 10})
+    println(mapNumbers.filterKeys { it.endsWith("1") })
+    println(mapNumbers.filterValues { it < 10 })
+    println(mapNumbers + Pair("four", 4))
+    println(mapNumbers + Pair("one", 10))
+    println(mapNumbers + mapOf("five" to 5, "one" to 11))
+    println(mapNumbers - "one")
+    println(mapNumbers - listOf("two", "four"))
+
 }
