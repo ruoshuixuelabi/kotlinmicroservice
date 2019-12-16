@@ -36,8 +36,8 @@ class RedisData {
         redisTemplate.expire(key, expireSecond, TimeUnit.SECONDS)
     }
 
-    fun getListValue(key: String): List<String>? {
-        return redisTemplate.opsForList().range(key, 0, 2);
+    fun getListValue(key: String, start: Long, end: Long): List<String>? {
+        return redisTemplate.opsForList().range(key, start, end);
     }
 
     fun saveSet(key: String, values: Array<String>) {

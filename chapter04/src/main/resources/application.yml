@@ -6,3 +6,10 @@ spring:
     host: 127.0.0.1
     port: 6379
     password: 123456
+  datasource:
+    url: dbc:mysql://127.0.0.1:3306/zhengtuo?characterEncoding=utf-8&serverTimezone=UTC
+    password: 123456
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
