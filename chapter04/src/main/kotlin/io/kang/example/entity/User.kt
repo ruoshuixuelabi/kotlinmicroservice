@@ -19,7 +19,6 @@ data class User(
         val education: EducationLevel,
         val income: Double
 )
-
 enum class EducationLevel {
     XIAOXUE, GAOZHONG, BENKE, YANJIUSHENG, BOSHI
 }
