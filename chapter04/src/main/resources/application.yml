@@ -13,3 +13,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  data:
+    mongodb:
+      uri: mongodb://exchange:123456@127.0.0.1:27017/exchange
