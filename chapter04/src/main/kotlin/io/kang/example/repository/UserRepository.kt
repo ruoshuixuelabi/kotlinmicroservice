@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.transaction.annotation.Transactional
 import java.lang.Exception
 
-interface UserReposiroty: CrudRepository<User, Long> {
+interface UserRepository: CrudRepository<User, Long> {
     fun findByUserNameAndPassword(userName: String, password: String): User?
 
     fun findByUserNameLike(userName: String): List<User>?

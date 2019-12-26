@@ -1,6 +1,7 @@
 package io.kang.example.entity
 
 import org.springframework.data.mongodb.core.mapping.Document
+import java.util.*
 import javax.persistence.Id
 
 open class Person(
@@ -8,7 +9,8 @@ open class Person(
         var personId: Long = 0L,
         var name: String = "",
         var address: String = "",
-        var age: Int = 0
+        var age: Int = 0,
+        var date: Date = Date()
 )
 
 @Document(collection="student")

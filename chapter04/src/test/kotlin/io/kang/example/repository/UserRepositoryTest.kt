@@ -18,7 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 class UserRepositoryTest {
 
     @Autowired
-    lateinit var userReposiroty: UserReposiroty
+    lateinit var userReposiroty: UserRepository
 
     @Test
     @Order(1)
