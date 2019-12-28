@@ -135,5 +135,17 @@ class StudentRepositoryTest {
         studentCursor.close()
     }
 
+    @Test
+    @Order(11)
+    fun testDelete() {
+        val document = Document()
+        document["name"] = "张三"
+
+        mongoTemplate.db.getCollection("student").deleteMany(document)
+        val n= mongoTemplate.db.getCollection("student").countDocuments()
+
+        Assert.assertEquals(0, n)
+    }
+
 
 }
