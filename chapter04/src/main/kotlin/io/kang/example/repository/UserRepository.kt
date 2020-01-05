@@ -8,6 +8,8 @@ import java.lang.Exception
 interface UserRepository: CrudRepository<User, Long> {
     fun findByUserNameAndPassword(userName: String, password: String): User?
 
+    fun findByUserName(userName: String): User?
+
     fun findByUserNameLike(userName: String): List<User>?
 
     fun findByIncomeGreaterThan(income: Double): List<User>?
