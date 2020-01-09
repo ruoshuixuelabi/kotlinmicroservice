@@ -16,3 +16,6 @@ spring:
   data:
     mongodb:
       uri: mongodb://exchange:123456@127.0.0.1:27017/exchange
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: 127.0.0.1:9300
