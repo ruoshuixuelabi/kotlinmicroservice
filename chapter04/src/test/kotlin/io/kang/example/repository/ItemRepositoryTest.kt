@@ -1,6 +1,7 @@
 package io.kang.example.repository
 
 import io.kang.example.entity.Item
+import org.elasticsearch.index.query.QueryBuilders
 import org.junit.Assert
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.ExtendWith
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @SpringBootTest
@@ -76,24 +78,54 @@ class ItemRepositoryTest {
     @Test
     @Order(8)
     fun testMatchQuery(){
-
+        val queryBuilder = NativeSearchQueryBuilder()
+        queryBuilder.withQuery(QueryBuilders.matchQuery("title", "坚果手机"))
+        val items = itemRepository.search(queryBuilder.build())
+        Assert.assertEquals(1, items.totalElements)
+        items.forEach { println(it) }
     }
 
     @Test
     @Order(9)
     fun testTermQuery(){
-
+        val queryBuilder = NativeSearchQueryBuilder()
+        queryBuilder.withQuery(QueryBuilders.termQuery("title", "坚果"))
+        val items = itemRepository.search(queryBuilder.build())
+        Assert.assertEquals(1, items.totalElements)
+        items.forEach { println(it) }
     }
 
     @Test
     @Order(10)
     fun testFuzzyQuery(){
-
+        val queryBuilder = NativeSearchQueryBuilder()
+        queryBuilder.withQuery(QueryBuilders.fuzzyQuery("title", "坚果"))
+        val items = itemRepository.search(queryBuilder.build())
+        Assert.assertEquals(1, items.totalElements)
+        items.forEach { println(it) }
     }
 
     @Test
     @Order(11)
-    fun testRangeQuery(){
+    fun testBooleanQuery(){
+        val queryBuilder = NativeSearchQueryBuilder()
+        queryBuilder.withQuery(QueryBuilders.boolQuery()
+                .must(QueryBuilders.termQuery("title", "坚果"))
+                .must(QueryBuilders.termQuery("brand", "锤子")))
 
+        val items = itemRepository.search(queryBuilder.build())
+        Assert.assertEquals(1, items.totalElements)
+        items.forEach { println(it) }
+    }
+
+    @Test
+    @Order(12)
+    fun testRangeQuery(){
+        val queryBuilder = NativeSearchQueryBuilder()
+        queryBuilder.withQuery(QueryBuilders.rangeQuery("price").from(3000).to(4000))
+
+        val items = itemRepository.search(queryBuilder.build())
+        Assert.assertEquals(2, items.totalElements)
+        items.forEach { println(it) }
     }
 }
