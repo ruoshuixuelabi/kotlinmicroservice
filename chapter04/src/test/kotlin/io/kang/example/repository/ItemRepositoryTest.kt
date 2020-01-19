@@ -128,4 +128,12 @@ class ItemRepositoryTest {
         Assert.assertEquals(2, items.totalElements)
         items.forEach { println(it) }
     }
+
+    @Test
+    @Order(13)
+    fun testDelete(){
+        itemRepository.deleteById(1)
+
+        Assert.assertEquals(2, itemRepository.count())
+    }
 }
