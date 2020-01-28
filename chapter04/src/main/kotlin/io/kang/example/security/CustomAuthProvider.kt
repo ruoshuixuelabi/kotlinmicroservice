@@ -14,6 +14,8 @@ class CustomAuthProvider: AuthenticationProvider {
     @Autowired
     lateinit var userRepository: UserRepository
 
+    private val auth = mapOf(Pair("test03", "ROLE_USER"), Pair("test02", "ROLE_ADMIN"))
+
     @Throws(AuthenticationException::class)
     override fun authenticate(authentication: Authentication): Authentication? {
         val username = authentication.name
@@ -22,7 +24,7 @@ class CustomAuthProvider: AuthenticationProvider {
         val user = userRepository.findByUserName(username)
 
         if(user?.password.equals(password)) {
-            val authorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN")
+            val authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(auth[username])
             return UsernamePasswordAuthenticationToken(user, password, authorities)
         }
 
