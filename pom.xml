@@ -7,7 +7,11 @@
         <module>chapter01</module>
         <module>chapter03</module>
         <module>chapter04</module>
-    </modules>
+        <module>chapter05-eureka</module>
+		<module>chapter05-consul</module>
+		<module>chapter05-zk</module>
+		<module>chapter05-nacos</module>
+	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
