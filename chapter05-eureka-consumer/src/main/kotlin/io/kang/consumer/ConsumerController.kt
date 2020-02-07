@@ -9,7 +9,7 @@ class ConsumerController {
     @Autowired
     lateinit var providerService: ProviderService
 
-    @GetMapping("/openProvide")
+    @GetMapping("/feignProvide")
     fun openProvide(): String {
         return providerService.provide()
     }
