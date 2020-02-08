@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class ZkController {
-    @GetMapping("/hello/zk")
+    @GetMapping("hello/zk")
     fun helloZk(): String {
         return "hello zookeeper"
     }
