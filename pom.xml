@@ -14,7 +14,8 @@
         <module>chapter05-eureka-provider</module>
 		<module>chapter05-eureka-consumer</module>
         <module>chapter05-eureka-consumer-ribbon</module>
-    </modules>
+        <module>chapter05-consul-consumer</module>
+	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
