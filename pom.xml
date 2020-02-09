@@ -17,7 +17,10 @@
         <module>chapter05-consul-consumer</module>
         <module>chapter05-zk-consumer</module>
         <module>chapter05-nacos-consumer</module>
-    </modules>
+        <module>chapter06-springcloud-config</module>
+		<module>chapter06-apollo-config</module>
+		<module>chapter06-nacos-config</module>
+	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
