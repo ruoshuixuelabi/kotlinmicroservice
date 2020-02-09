@@ -1,4 +1,4 @@
-package io.kang.zk.consumer
+package io.kang.nacos.consumer
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -8,17 +8,17 @@ import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.context.annotation.Bean
 import org.springframework.web.client.RestTemplate
 
-@EnableDiscoveryClient
 @SpringBootApplication
 @EnableFeignClients
-class ZkConsumerApplication {
+@EnableDiscoveryClient
+class NacosConsumerApplication {
     @Bean
     @LoadBalanced
-    fun restTemplate():RestTemplate {
+    fun restTemplate(): RestTemplate {
         return RestTemplate()
     }
 }
 
 fun main(args: Array<String>) {
-    runApplication<ZkConsumerApplication>(*args)
+    runApplication<NacosConsumerApplication>(*args)
 }

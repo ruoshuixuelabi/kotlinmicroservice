@@ -1,7 +1,5 @@
 package io.kang.chapter03.basicsyntax
 
-import org.hibernate.validator.internal.util.logging.formatter.ArrayOfClassesObjectFormatter
-
 fun main() {
     fun printDouble(d: Double) { print(d) }
 

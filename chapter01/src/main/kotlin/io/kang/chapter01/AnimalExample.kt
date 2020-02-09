@@ -1,7 +1,6 @@
 package io.kang.chapter01
 
 import javafx.application.Application.launch
-import reactor.core.publisher.Mono.delay
 
 //1 数据类
 data class Animal(val name: String,

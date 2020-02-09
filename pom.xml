@@ -16,6 +16,7 @@
         <module>chapter05-eureka-consumer-ribbon</module>
         <module>chapter05-consul-consumer</module>
         <module>chapter05-zk-consumer</module>
+        <module>chapter05-nacos-consumer</module>
     </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
