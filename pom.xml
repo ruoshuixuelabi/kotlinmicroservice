@@ -20,7 +20,8 @@
         <module>chapter06-springcloud-config</module>
 		<module>chapter06-apollo-config</module>
 		<module>chapter06-nacos-config</module>
-	</modules>
+        <module>chapter06-springcloud-config-client</module>
+    </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
