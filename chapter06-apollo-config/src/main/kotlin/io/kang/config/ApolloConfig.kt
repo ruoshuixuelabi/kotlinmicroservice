@@ -18,7 +18,6 @@ class ApolloConfig {
             println("${user?.username} is change")
         }
     }
-
 }
 
 class User{
