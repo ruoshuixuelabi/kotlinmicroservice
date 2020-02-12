@@ -21,6 +21,7 @@
 		<module>chapter06-apollo-config</module>
 		<module>chapter06-nacos-config</module>
         <module>chapter06-springcloud-config-client</module>
+        <module>chapter06-consul-config</module>
     </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>

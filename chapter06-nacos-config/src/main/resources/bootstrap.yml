@@ -4,6 +4,12 @@ spring:
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yaml
+        extension-configs:
+          -
+            data-id: nacos-config.yaml
+            group: default
+            refresh: true
+
   profiles:
     active: dev
   application:
