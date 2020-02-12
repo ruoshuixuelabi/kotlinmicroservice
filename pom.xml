@@ -22,7 +22,9 @@
 		<module>chapter06-nacos-config</module>
         <module>chapter06-springcloud-config-client</module>
         <module>chapter06-consul-config</module>
-    </modules>
+        <module>chapter07-zuul</module>
+		<module>chapter07-gateway</module>
+	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>

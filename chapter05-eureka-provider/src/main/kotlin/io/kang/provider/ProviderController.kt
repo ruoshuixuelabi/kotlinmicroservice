@@ -10,4 +10,9 @@ class ProviderController {
     fun provide(): String {
         return "Hello From Provider"
     }
+
+    @GetMapping("/limit")
+    fun limit(): String {
+        return "Limit Interface"
+    }
 }
