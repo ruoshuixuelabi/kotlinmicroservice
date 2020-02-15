@@ -3,4 +3,4 @@ zuul:
     provide-service-url:
       path: /provide/*
       service-id: provider-server
-  ignored-services: consumer-feign
+#  ignored-services: consumer-feign
