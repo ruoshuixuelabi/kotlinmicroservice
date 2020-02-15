@@ -1,0 +1,15 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8070
+zuul:
+  routes:
+    provide-service-url:
+      path: /provide/*
+      service-id: provider-server
+  ignored-services: consumer-feign
+ribbon:
+  eureka:
+    enabled: true
