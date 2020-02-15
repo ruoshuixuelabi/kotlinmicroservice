@@ -7,3 +7,8 @@ server:
 ribbon:
   eureka:
     enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info
