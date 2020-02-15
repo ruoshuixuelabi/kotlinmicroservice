@@ -5,4 +5,4 @@ spring:
       profile: dev
       uri: http://localhost:8060
   application:
-    name: zuul-app
+    name: zuulapp
