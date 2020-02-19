@@ -2,11 +2,11 @@ package io.kang.gateway
 
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver
 import org.springframework.context.annotation.Bean
-import org.springframework.stereotype.Component
-import org.springframework.web.server.ServerWebExchange
+import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import reactor.core.publisher.Mono
 
-@Component
+@Configuration
 class RequestRateLimiterConfig {
     @Bean("ipAddressKeyResolver")
     fun ipAddressKeyResolver(): KeyResolver {
@@ -16,6 +16,7 @@ class RequestRateLimiterConfig {
     }
 
     @Bean("apiKeyResolver")
+    @Primary
     fun apiKeyResolver(): KeyResolver {
         return KeyResolver {
             exchange ->  Mono.just(exchange.request.path.value())

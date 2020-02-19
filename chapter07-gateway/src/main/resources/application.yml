@@ -23,7 +23,7 @@ spring:
             - name: RequestRateLimiter
               args:
                 ### 限流过滤器的 Bean 名称
-                key-resolver: '#{@uriKeyResolver}'
+                key-resolver: '#{@apiKeyResolver}'
                 ### 希望允许用户每秒处理多少个请求
                 redis-rate-limiter.replenishRate: 1
                 ### 用户允许在一秒钟内完成的最大请求数
