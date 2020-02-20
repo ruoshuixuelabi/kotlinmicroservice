@@ -24,7 +24,8 @@
         <module>chapter06-consul-config</module>
         <module>chapter07-zuul</module>
 		<module>chapter07-gateway</module>
-	</modules>
+        <module>chapter08-sentinel</module>
+    </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
