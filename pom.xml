@@ -25,7 +25,12 @@
         <module>chapter07-zuul</module>
 		<module>chapter07-gateway</module>
         <module>chapter08-sentinel</module>
-    </modules>
+        <module>chapter08-stream-rocketmq</module>
+		<module>chapter08-oss</module>
+		<module>chapter08-schedulerx</module>
+		<module>chapter08-seata</module>
+		<module>chapter08-dubbo</module>
+	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
