@@ -19,6 +19,12 @@ class SentinelController {
         return "hello1 sentinel"
     }
 
+    @GetMapping("/hello2")
+    @SentinelResource(value = "helloNacosApi", blockHandler = "exceptionHandler")
+    fun helloNacos(): String {
+        return "hello1 sentinel in nacos"
+    }
+
     fun exceptionHandler(s: Long, ex: BlockException): String {
         println(ex.printStackTrace())
         return "Oops, error occurred at $s"
