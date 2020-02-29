@@ -29,4 +29,12 @@ class SteamController {
         headers["partitionKey"] = 1
         mySource.output1().send(MessageBuilder.createMessage("hello world: $id", MessageHeaders(headers)))
     }
+
+    @GetMapping("/send2/{id}")
+    fun send2(@PathVariable id: String) {
+        val headers = HashMap<String, Any>()
+        headers[MessageConst.PROPERTY_TAGS] = "tagStr2"
+        headers["partitionKey"] = 1
+        mySource.output1().send(MessageBuilder.createMessage("hello world: $id", MessageHeaders(headers)))
+    }
 }

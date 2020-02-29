@@ -1,0 +1,11 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: oss-app
+  cloud:
+    alicloud:
+        oss:
+          endpoint: http://oss-cn-beijing.aliyuncs.com
+        access-key: LTAI4FvUmYLSLkp6HMa7bxnj
+        secret-key: C6fGpxqBWjlRTlG9zKFGPkQzE81DdZ
