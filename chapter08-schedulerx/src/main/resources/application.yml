@@ -1,0 +1,13 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: SCX-APP
+  cloud:
+    alicloud:
+      scx:
+        group-id:
+      edas:
+        namespace:
+      access-key: LTAI4FvUmYLSLkp6HMa7bxnj
+      secret-key: C6fGpxqBWjlRTlG9zKFGPkQzE81DdZ
