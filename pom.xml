@@ -30,7 +30,8 @@
 		<module>chapter08-schedulerx</module>
 		<module>chapter08-seata</module>
 		<module>chapter08-dubbo</module>
-	</modules>
+        <module>chapter08-seata-consumer</module>
+    </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
