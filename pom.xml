@@ -31,6 +31,7 @@
 		<module>chapter08-seata</module>
 		<module>chapter08-dubbo</module>
         <module>chapter08-seata-consumer</module>
+        <module>chapter08-dubbo-consumer</module>
     </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
