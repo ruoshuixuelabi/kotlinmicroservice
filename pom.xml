@@ -33,7 +33,11 @@
         <module>chapter08-seata-consumer</module>
         <module>chapter08-dubbo-consumer</module>
         <module>chapter09-prometheus</module>
-    </modules>
+        <module>chapter10-zipkin</module>
+        <module>chapter10-zipkin1</module>
+		<module>chapter10-skywalking</module>
+		<module>chapter10-skywalking1</module>
+	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
