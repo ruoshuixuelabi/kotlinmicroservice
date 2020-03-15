@@ -37,7 +37,8 @@
         <module>chapter10-zipkin1</module>
 		<module>chapter10-skywalking</module>
 		<module>chapter10-skywalking1</module>
-	</modules>
+        <module>chapter11-blog</module>
+    </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
