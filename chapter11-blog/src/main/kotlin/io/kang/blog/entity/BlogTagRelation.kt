@@ -1,8 +1,14 @@
 package io.kang.blog.entity
 
 import java.util.*
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.Table
 
+@Entity
+@Table(name = "tb_blog_tag_relation")
 class BlogTagRelation {
+    @Id
     var relationId: Long? = null
 
     var blogId: Long? = null

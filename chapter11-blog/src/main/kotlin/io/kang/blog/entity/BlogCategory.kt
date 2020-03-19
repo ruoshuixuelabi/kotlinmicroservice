@@ -2,8 +2,14 @@ package io.kang.blog.entity
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.util.*
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.Table
 
+@Entity
+@Table(name = "tb_blog_category")
 class BlogCategory {
+    @Id
     var categoryId: Int? = null
 
     var categoryName: String? = null

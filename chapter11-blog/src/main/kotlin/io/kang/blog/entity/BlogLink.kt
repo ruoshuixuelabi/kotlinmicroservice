@@ -2,8 +2,14 @@ package io.kang.blog.entity
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.util.*
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.Table
 
+@Entity
+@Table(name = "tb_link")
 class BlogLink {
+    @Id
     var linkId: Int? = null
 
     var linkType: Byte? = null

@@ -1,9 +1,13 @@
 package io.kang.blog.entity
 
 import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.Table
 
 @Entity
+@Table(name = "tb_admin_user")
 class AdminUser {
+    @Id
     var adminUserId: Int? = null
 
     var loginUserName: String? = null

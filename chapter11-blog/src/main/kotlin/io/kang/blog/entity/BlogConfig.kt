@@ -1,8 +1,14 @@
 package io.kang.blog.entity
 
 import java.util.*
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.Table
 
+@Entity
+@Table(name = "tb_config")
 class BlogConfig {
+    @Id
     var configName: String? = null
         set(configName) {
             field = configName?.trim { it <= ' ' }
