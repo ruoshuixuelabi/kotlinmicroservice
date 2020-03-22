@@ -1,7 +1,13 @@
 package io.kang.blog.repository
 
+import com.querydsl.core.types.Order
+import com.querydsl.core.types.OrderSpecifier
+import com.querydsl.core.types.Path
+import com.querydsl.core.types.dsl.BooleanExpression
+import com.querydsl.core.types.dsl.BooleanOperation
 import com.querydsl.jpa.impl.JPAQueryFactory
 import io.kang.blog.entity.BlogComment
+import io.kang.blog.entity.QBlogComment
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -10,43 +16,198 @@ class BlogCommentService {
     @Autowired
     lateinit var queryFactory: JPAQueryFactory
 
+    @Autowired
+    lateinit var blogCommentRepository: BlogCommentRepository
+
     fun deleteByPrimaryKey(commentId: Long): Int {
-        return 0
+        val qBlogComment = QBlogComment.blogComment
+
+        return queryFactory.update(qBlogComment)
+                .set(qBlogComment.isDeleted, 1)
+                .where(qBlogComment.commentId.eq(commentId).and(qBlogComment.isDeleted.eq(0)))
+                .execute()
+                .toInt()
     }
 
     fun insert(record: BlogComment): Int {
+        blogCommentRepository.save(record)
         return 0
     }
 
     fun insertSelective(record: BlogComment): Int {
+        blogCommentRepository.save(record)
         return 0
     }
 
-    fun selectByPrimaryKey(commentId: Long?): BlogComment {
-        return BlogComment()
+    fun selectByPrimaryKey(commentId: Long): BlogComment? {
+        val qBlogComment = QBlogComment.blogComment
+
+        return queryFactory.selectFrom(qBlogComment)
+                .where(qBlogComment.commentId.eq(commentId).and(qBlogComment.isDeleted.eq(0)))
+                .fetchOne()
     }
 
     fun updateByPrimaryKeySelective(record: BlogComment): Int {
-        return 0
+        val qBlogComment = QBlogComment.blogComment
+
+        val cols = arrayListOf<Path<*>>()
+        val values = arrayListOf<Any?>()
+
+        if(record.blogId != null) {
+            cols.add(qBlogComment.blogId)
+            values.add(record.blogId)
+        }
+
+        if(record.commentator != null) {
+            cols.add(qBlogComment.commentator)
+            values.add(record.commentator)
+        }
+
+        if(record.email != null) {
+            cols.add(qBlogComment.email)
+            values.add(record.email)
+        }
+
+        if(record.websiteUrl != null) {
+            cols.add(qBlogComment.websiteUrl)
+            values.add(record.websiteUrl)
+        }
+
+        if(record.commentBody != null) {
+            cols.add(qBlogComment.commentBody)
+            values.add(record.commentBody)
+        }
+
+        if(record.commentCreateTime != null) {
+            cols.add(qBlogComment.commentCreateTime)
+            values.add(record.commentCreateTime)
+        }
+
+        if(record.commentatorIp != null) {
+            cols.add(qBlogComment.commentatorIp)
+            values.add(record.commentatorIp)
+        }
+
+        if(record.replyBody != null) {
+            cols.add(qBlogComment.replyBody)
+            values.add(record.replyBody)
+        }
+
+        if(record.replyCreateTime != null) {
+            cols.add(qBlogComment.replyCreateTime)
+            values.add(record.replyCreateTime)
+        }
+
+        if(record.commentStatus != null) {
+            cols.add(qBlogComment.commentStatus)
+            values.add(record.commentStatus)
+        }
+
+        if(record.isDeleted != null) {
+            cols.add(qBlogComment.isDeleted)
+            values.add(record.isDeleted)
+        }
+
+        return queryFactory.update(qBlogComment)
+                .set(cols, values)
+                .where(qBlogComment.commentId.eq(record.commentId))
+                .execute()
+                .toInt()
     }
 
     fun updateByPrimaryKey(record: BlogComment): Int {
-        return 0
+        val qBlogComment = QBlogComment.blogComment
+
+        return queryFactory.update(qBlogComment)
+                .set(qBlogComment.blogId, record.blogId)
+                .set(qBlogComment.commentator, record.commentator)
+                .set(qBlogComment.email, record.email)
+                .set(qBlogComment.websiteUrl, record.websiteUrl)
+                .set(qBlogComment.commentBody, record.commentBody)
+                .set(qBlogComment.commentCreateTime, record.commentCreateTime)
+                .set(qBlogComment.commentatorIp, record.commentatorIp)
+                .set(qBlogComment.replyBody, record.replyBody)
+                .set(qBlogComment.replyCreateTime, record.replyCreateTime)
+                .set(qBlogComment.commentStatus, record.commentStatus)
+                .set(qBlogComment.isDeleted, record.isDeleted)
+                .where(qBlogComment.commentId.eq(record.commentId))
+                .execute()
+                .toInt()
     }
 
     fun findBlogCommentList(map: Map<*, *>): List<BlogComment> {
-        return listOf()
+        //todo test
+        val qBlogComment = QBlogComment.blogComment
+
+        val start = map["start"] as Long
+        val limit = map["limit"] as Long
+        val blogId = map["blogId"] as Long
+        val commentStatus = map["commentStatus"] as Byte
+
+        var predicate: BooleanExpression? = null
+        if (blogId != null) {
+            predicate = qBlogComment.blogId.eq(blogId)
+        }
+
+        var predicate1: BooleanExpression? = null
+        if(commentStatus != null) {
+            predicate1 = qBlogComment.commentStatus.eq(commentStatus)
+        }
+        return if(start != null && limit != null) {
+            queryFactory.selectFrom(qBlogComment)
+                    .where(predicate)
+                    .where(predicate1)
+                    .orderBy(OrderSpecifier(Order.DESC, qBlogComment.commentId))
+                    .offset(start)
+                    .limit(limit)
+                    .fetchResults()
+                    .results
+        }else {
+            listOf()
+        }
     }
 
     fun getTotalBlogComments(map: Map<*, *>): Int {
-        return 0
+        val qBlogComment = QBlogComment.blogComment
+
+        val blogId = map["blogId"] as Long
+        val commentStatus = map["commentStatus"] as Byte
+
+        var predicate: BooleanExpression? = null
+        if (blogId != null) {
+            predicate = qBlogComment.blogId.eq(blogId)
+        }
+
+        var predicate1: BooleanExpression? = null
+        if(commentStatus != null) {
+            predicate1 = qBlogComment.commentStatus.eq(commentStatus)
+        }
+
+        return queryFactory.selectFrom(qBlogComment)
+                .where(predicate)
+                .where(predicate1)
+                .where(qBlogComment.isDeleted.eq(0))
+                .fetchCount()
+                .toInt()
     }
 
-    fun checkDone(ids: Array<Int>): Int {
-        return 0
+    fun checkDone(ids: List<Long>): Int {
+        val qBlogComment = QBlogComment.blogComment
+
+        return queryFactory.update(qBlogComment)
+                .set(qBlogComment.isDeleted, 1)
+                .where(qBlogComment.commentId.`in`(ids).and(qBlogComment.commentStatus.eq(0)))
+                .execute()
+                .toInt()
     }
 
-    fun deleteBatch(ids: Array<Int>): Int {
-        return 0
+    fun deleteBatch(ids: List<Long>): Int {
+        val qBlogComment = QBlogComment.blogComment
+
+        return queryFactory.update(qBlogComment)
+                .set(qBlogComment.isDeleted, 1)
+                .where(qBlogComment.commentId.`in`(ids))
+                .execute()
+                .toInt()
     }
 }

@@ -1,7 +1,11 @@
 package io.kang.blog.repository
 
+import com.querydsl.core.types.Order
+import com.querydsl.core.types.OrderSpecifier
+import com.querydsl.core.types.Path
 import com.querydsl.jpa.impl.JPAQueryFactory
 import io.kang.blog.entity.BlogCategory
+import io.kang.blog.entity.QBlogCategory
 import io.kang.blog.util.PageQueryUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -11,47 +15,154 @@ class BlogCategoryService {
     @Autowired
     lateinit var queryFactory: JPAQueryFactory
 
+    @Autowired
+    lateinit var blogCategoryRepository: BlogCategoryRepository
+
     fun deleteByPrimaryKey(categoryId: Int): Int {
-        return 0
+        val qBlogCategory = QBlogCategory.blogCategory
+
+        val predicate = qBlogCategory.categoryId.eq(categoryId)
+                .and(qBlogCategory.isDeleted.eq(0))
+
+        return queryFactory.update(qBlogCategory)
+                .set(qBlogCategory.isDeleted, 1)
+                .where(predicate)
+                .execute()
+                .toInt()
     }
 
     fun insert(record: BlogCategory): Int {
+        blogCategoryRepository.save(record)
         return 0
     }
 
     fun insertSelective(record: BlogCategory): Int {
+        blogCategoryRepository.save(record)
         return 0
     }
 
-    fun selectByPrimaryKey(categoryId: Int?): BlogCategory {
-        return BlogCategory()
+    fun selectByPrimaryKey(categoryId: Int?): BlogCategory? {
+        val qBlogCategory = QBlogCategory.blogCategory
+
+        val predicate = qBlogCategory.categoryId.eq(categoryId)
+                .and(qBlogCategory.isDeleted.eq(0))
+
+        return queryFactory.selectFrom(qBlogCategory)
+                .where(predicate)
+                .fetchOne()
     }
 
-    fun selectByCategoryName(categoryName: String): BlogCategory {
-        return BlogCategory()
+    fun selectByCategoryName(categoryName: String): BlogCategory? {
+        val qBlogCategory = QBlogCategory.blogCategory
+
+        val predicate = qBlogCategory.categoryName.eq(categoryName)
+                .and(qBlogCategory.isDeleted.eq(0))
+
+        return queryFactory.selectFrom(qBlogCategory)
+                .where(predicate)
+                .fetchOne()
     }
 
     fun updateByPrimaryKeySelective(record: BlogCategory): Int {
-        return 0
+        val qBlogCategory = QBlogCategory.blogCategory
+
+        val cols = arrayListOf<Path<*>>()
+        val values = arrayListOf<Any?>()
+
+        if(record.categoryName != null) {
+            cols.add(qBlogCategory.categoryName)
+            values.add(record.categoryName)
+        }
+
+        if(record.categoryIcon != null) {
+            cols.add(qBlogCategory.categoryIcon)
+            values.add(record.categoryIcon)
+        }
+
+        if(record.categoryRank != null) {
+            cols.add(qBlogCategory.categoryRank)
+            values.add(record.categoryRank)
+        }
+
+        if(record.isDeleted != null) {
+            cols.add(qBlogCategory.isDeleted)
+            values.add(record.isDeleted)
+        }
+
+        if(record.createTime != null) {
+            cols.add(qBlogCategory.createTime)
+            values.add(record.createTime)
+        }
+        return queryFactory.update(qBlogCategory)
+                .set(cols, values)
+                .where(qBlogCategory.categoryId.eq(record.categoryId))
+                .execute()
+                .toInt()
     }
 
     fun updateByPrimaryKey(record: BlogCategory): Int {
-        return 0
+        val qBlogCategory = QBlogCategory.blogCategory
+
+        return queryFactory.update(qBlogCategory)
+                .set(qBlogCategory.categoryName, record.categoryName)
+                .set(qBlogCategory.categoryIcon, record.categoryIcon)
+                .set(qBlogCategory.categoryRank, record.categoryRank)
+                .set(qBlogCategory.isDeleted, record.isDeleted)
+                .set(qBlogCategory.createTime, record.createTime)
+                .where(qBlogCategory.categoryId.eq(record.categoryId))
+                .execute()
+                .toInt()
     }
 
     fun findCategoryList(pageUtil: PageQueryUtil): List<BlogCategory> {
-        return listOf()
+        val qBlogCategory = QBlogCategory.blogCategory
+
+        val start = pageUtil["start"] as Long
+        val limit = pageUtil["limit"] as Long
+
+        return if(start != null && limit != null) {
+            queryFactory.selectFrom(qBlogCategory)
+                    .where(qBlogCategory.isDeleted.eq(0))
+                    .orderBy(OrderSpecifier(Order.DESC, qBlogCategory.categoryRank))
+                    .orderBy(OrderSpecifier(Order.DESC, qBlogCategory.createTime))
+                    .offset(start)
+                    .limit(limit)
+                    .fetchResults()
+                    .results
+        }else {
+            listOf()
+        }
     }
 
     fun selectByCategoryIds(categoryIds: List<Int>): List<BlogCategory> {
-        return listOf()
+        val qBlogCategory = QBlogCategory.blogCategory
+
+        val predicate = qBlogCategory.categoryId.`in`(categoryIds)
+                .and(qBlogCategory.isDeleted.eq(0))
+
+        return queryFactory.selectFrom(qBlogCategory)
+                .where(predicate)
+                .fetch()
     }
 
     fun getTotalCategories(pageUtil: PageQueryUtil): Int {
-        return 0
+        val qBlogCategory = QBlogCategory.blogCategory
+
+        return queryFactory.selectFrom(qBlogCategory)
+                .where(qBlogCategory.isDeleted.eq(0))
+                .fetchCount()
+                .toInt()
     }
 
-    fun deleteBatch(ids: Array<Int>): Int {
-        return 0
+    fun deleteBatch(ids: List<Int>): Int {
+        val qBlogCategory = QBlogCategory.blogCategory
+
+        val predicate = qBlogCategory.categoryId.`in`(ids)
+
+        return queryFactory.update(qBlogCategory)
+                .set(qBlogCategory.isDeleted, 1)
+                .where(predicate)
+                .execute()
+                .toInt()
     }
 }
