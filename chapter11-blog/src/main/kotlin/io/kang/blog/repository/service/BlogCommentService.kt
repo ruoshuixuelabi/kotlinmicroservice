@@ -10,6 +10,7 @@ import io.kang.blog.entity.BlogComment
 import io.kang.blog.entity.QBlogComment
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
 class BlogCommentService {
@@ -19,6 +20,7 @@ class BlogCommentService {
     @Autowired
     lateinit var blogCommentRepository: BlogCommentRepository
 
+    @Transactional
     fun deleteByPrimaryKey(commentId: Long): Int {
         val qBlogComment = QBlogComment.blogComment
 
@@ -29,11 +31,13 @@ class BlogCommentService {
                 .toInt()
     }
 
+    @Transactional
     fun insert(record: BlogComment): Int {
         blogCommentRepository.save(record)
         return 0
     }
 
+    @Transactional
     fun insertSelective(record: BlogComment): Int {
         blogCommentRepository.save(record)
         return 0
@@ -47,6 +51,7 @@ class BlogCommentService {
                 .fetchOne()
     }
 
+    @Transactional
     fun updateByPrimaryKeySelective(record: BlogComment): Int {
         val qBlogComment = QBlogComment.blogComment
 
@@ -115,6 +120,7 @@ class BlogCommentService {
                 .toInt()
     }
 
+    @Transactional
     fun updateByPrimaryKey(record: BlogComment): Int {
         val qBlogComment = QBlogComment.blogComment
 
@@ -139,27 +145,27 @@ class BlogCommentService {
         //todo test
         val qBlogComment = QBlogComment.blogComment
 
-        val start = map["start"] as Long
-        val limit = map["limit"] as Long
-        val blogId = map["blogId"] as Long
-        val commentStatus = map["commentStatus"] as Byte
+        val start = map["start"] as Int
+        val limit = map["limit"] as Int
+        val blogId = map["blogId"] as Int
+        val commentStatus = map["commentStatus"] as Int
 
         var predicate: BooleanExpression? = null
         if (blogId != null) {
-            predicate = qBlogComment.blogId.eq(blogId)
+            predicate = qBlogComment.blogId.eq(blogId.toLong())
         }
 
         var predicate1: BooleanExpression? = null
         if(commentStatus != null) {
-            predicate1 = qBlogComment.commentStatus.eq(commentStatus)
+            predicate1 = qBlogComment.commentStatus.eq(commentStatus.toByte())
         }
         return if(start != null && limit != null) {
             queryFactory.selectFrom(qBlogComment)
                     .where(predicate)
                     .where(predicate1)
                     .orderBy(OrderSpecifier(Order.DESC, qBlogComment.commentId))
-                    .offset(start)
-                    .limit(limit)
+                    .offset(start.toLong())
+                    .limit(limit.toLong())
                     .fetchResults()
                     .results
         }else {
@@ -191,6 +197,7 @@ class BlogCommentService {
                 .toInt()
     }
 
+    @Transactional
     fun checkDone(ids: List<Long>): Int {
         val qBlogComment = QBlogComment.blogComment
 
@@ -201,6 +208,7 @@ class BlogCommentService {
                 .toInt()
     }
 
+    @Transactional
     fun deleteBatch(ids: List<Long>): Int {
         val qBlogComment = QBlogComment.blogComment
 

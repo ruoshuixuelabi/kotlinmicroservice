@@ -6,6 +6,7 @@ import io.kang.blog.entity.AdminUser
 import io.kang.blog.entity.QAdminUser
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
 class AdminUserService {
@@ -15,11 +16,13 @@ class AdminUserService {
     @Autowired
     lateinit var queryFactory: JPAQueryFactory
 
+    @Transactional
     fun insert(record: AdminUser): Int {
         adminUserRepository.save(record)
         return 0
     }
 
+    @Transactional
     fun insertSelective(record: AdminUser): Int {
         //todo how to shixian insert selective
         adminUserRepository.save(record)
@@ -48,6 +51,7 @@ class AdminUserService {
                 .fetchOne()
     }
 
+    @Transactional
     fun updateByPrimaryKeySelective(record: AdminUser): Int {
         val qAdminUser = QAdminUser.adminUser
 
@@ -81,6 +85,7 @@ class AdminUserService {
                 .toInt()
     }
 
+    @Transactional
     fun updateByPrimaryKey(record: AdminUser): Int {
         val qAdminUser = QAdminUser.adminUser
 

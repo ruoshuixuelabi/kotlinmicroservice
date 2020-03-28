@@ -9,6 +9,7 @@ import io.kang.blog.entity.QBlogCategory
 import io.kang.blog.util.PageQueryUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
 class BlogCategoryService {
@@ -18,6 +19,7 @@ class BlogCategoryService {
     @Autowired
     lateinit var blogCategoryRepository: BlogCategoryRepository
 
+    @Transactional
     fun deleteByPrimaryKey(categoryId: Int): Int {
         val qBlogCategory = QBlogCategory.blogCategory
 
@@ -31,11 +33,13 @@ class BlogCategoryService {
                 .toInt()
     }
 
+    @Transactional
     fun insert(record: BlogCategory): Int {
         blogCategoryRepository.save(record)
         return 0
     }
 
+    @Transactional
     fun insertSelective(record: BlogCategory): Int {
         blogCategoryRepository.save(record)
         return 0
@@ -63,6 +67,7 @@ class BlogCategoryService {
                 .fetchOne()
     }
 
+    @Transactional
     fun updateByPrimaryKeySelective(record: BlogCategory): Int {
         val qBlogCategory = QBlogCategory.blogCategory
 
@@ -100,6 +105,7 @@ class BlogCategoryService {
                 .toInt()
     }
 
+    @Transactional
     fun updateByPrimaryKey(record: BlogCategory): Int {
         val qBlogCategory = QBlogCategory.blogCategory
 
@@ -154,6 +160,7 @@ class BlogCategoryService {
                 .toInt()
     }
 
+    @Transactional
     fun deleteBatch(ids: List<Int>): Int {
         val qBlogCategory = QBlogCategory.blogCategory
 
