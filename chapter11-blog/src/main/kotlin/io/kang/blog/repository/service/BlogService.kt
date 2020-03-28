@@ -1,86 +1,361 @@
 package io.kang.blog.repository
 
+import com.querydsl.core.types.OrderSpecifier
+import com.querydsl.core.types.Path
+import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import io.kang.blog.entity.Blog
+import io.kang.blog.entity.QBlog
 import io.kang.blog.util.PageQueryUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
+import com.querydsl.core.types.Order
+import io.kang.blog.entity.QBlogTagRelation
 
 @Component
 class BlogService {
     @Autowired
     lateinit var queryFactory: JPAQueryFactory
 
+    @Autowired
+    lateinit var blogRepository: BlogRepository
+
+    @Transactional
     fun deleteByPrimaryKey(blogId: Long): Int {
-        return 0
+        val qBlog = QBlog.blog
+
+        return queryFactory.update(qBlog)
+                .set(qBlog.isDeleted, 1)
+                .where(qBlog.isDeleted.eq(0).and(qBlog.blogId.eq(blogId)))
+                .execute()
+                .toInt()
     }
 
+    @Transactional
     fun insert(record: Blog): Int {
+        blogRepository.save(record)
         return 0
     }
 
-
+    @Transactional
     fun insertSelective(record: Blog): Int {
+        blogRepository.save(record)
         return 0
     }
 
 
     fun selectByPrimaryKey(blogId: Long): Blog {
-        return Blog()
+        val qBlog = QBlog.blog
+
+        return queryFactory.selectFrom(qBlog)
+                .where(qBlog.blogId.eq(blogId))
+                .fetchFirst()
     }
 
+    @Transactional
     fun updateByPrimaryKeySelective(record: Blog): Int {
-        return 0
+        val qBlog = QBlog.blog
+
+        val cols = arrayListOf<Path<*>>()
+        val values = arrayListOf<Any?>()
+
+        if(record.blogTitle != null) {
+            cols.add(qBlog.blogTitle)
+            values.add(record.blogTitle)
+        }
+
+        if(record.blogSubUrl != null) {
+            cols.add(qBlog.blogSubUrl)
+            values.add(record.blogSubUrl)
+        }
+
+        if(record.blogCoverImage != null) {
+            cols.add(qBlog.blogCoverImage)
+            values.add(record.blogCoverImage)
+        }
+
+        if(record.blogContent != null) {
+            cols.add(qBlog.blogContent)
+            values.add(record.blogContent)
+        }
+
+        if(record.blogCategoryId != null) {
+            cols.add(qBlog.blogCategoryId)
+            values.add(record.blogCategoryId)
+        }
+
+        if(record.blogCategoryName != null) {
+            cols.add(qBlog.blogCategoryName)
+            values.add(record.blogCategoryName)
+        }
+
+        if(record.blogCategoryName != null) {
+            cols.add(qBlog.blogCategoryName)
+            values.add(record.blogCategoryName)
+        }
+
+        if(record.blogTags != null) {
+            cols.add(qBlog.blogTags)
+            values.add(record.blogTags)
+        }
+
+        if(record.blogStatus != null) {
+            cols.add(qBlog.blogStatus)
+            values.add(record.blogStatus)
+        }
+
+        if(record.blogViews != null) {
+            cols.add(qBlog.blogViews)
+            values.add(record.blogViews)
+        }
+
+        if(record.enableComment != null) {
+            cols.add(qBlog.enableComment)
+            values.add(record.enableComment)
+        }
+
+        if(record.isDeleted != null) {
+            cols.add(qBlog.isDeleted)
+            values.add(record.isDeleted)
+        }
+
+        if(record.createTime != null) {
+            cols.add(qBlog.createTime)
+            values.add(record.createTime)
+        }
+
+        if(record.updateTime != null) {
+            cols.add(qBlog.updateTime)
+            values.add(record.updateTime)
+        }
+
+        if(record.blogContent != null) {
+            cols.add(qBlog.blogContent)
+            values.add(record.blogContent)
+        }
+
+        return queryFactory.update(qBlog)
+                .set(cols, values)
+                .where(qBlog.blogId.eq(record.blogId))
+                .execute()
+                .toInt()
     }
 
 
+    @Transactional
     fun updateByPrimaryKeyWithBLOBs(record: Blog): Int {
-        return 0
+        val qBlog = QBlog.blog
+
+        return queryFactory.update(qBlog)
+                .set(qBlog.blogTitle, record.blogTitle)
+                .set(qBlog.blogSubUrl, record.blogSubUrl)
+                .set(qBlog.blogCoverImage, record.blogCoverImage)
+                .set(qBlog.blogCategoryId, record.blogCategoryId)
+                .set(qBlog.blogCategoryName, record.blogCategoryName)
+                .set(qBlog.blogTags, record.blogTags)
+                .set(qBlog.blogStatus, record.blogStatus)
+                .set(qBlog.blogViews, record.blogViews)
+                .set(qBlog.enableComment, record.enableComment)
+                .set(qBlog.isDeleted, record.isDeleted)
+                .set(qBlog.createTime, record.createTime)
+                .set(qBlog.updateTime, record.updateTime)
+                .set(qBlog.blogContent, record.blogContent)
+                .where(qBlog.blogId.eq(record.blogId))
+                .execute().toInt()
     }
 
-
+    @Transactional
     fun updateByPrimaryKey(record: Blog): Int {
-        return 0
+        val qBlog = QBlog.blog
+
+        return queryFactory.update(qBlog)
+                .set(qBlog.blogTitle, record.blogTitle)
+                .set(qBlog.blogSubUrl, record.blogSubUrl)
+                .set(qBlog.blogCoverImage, record.blogCoverImage)
+                .set(qBlog.blogCategoryId, record.blogCategoryId)
+                .set(qBlog.blogCategoryName, record.blogCategoryName)
+                .set(qBlog.blogTags, record.blogTags)
+                .set(qBlog.blogStatus, record.blogStatus)
+                .set(qBlog.blogViews, record.blogViews)
+                .set(qBlog.enableComment, record.enableComment)
+                .set(qBlog.isDeleted, record.isDeleted)
+                .set(qBlog.createTime, record.createTime)
+                .set(qBlog.updateTime, record.updateTime)
+                .where(qBlog.blogId.eq(record.blogId))
+                .execute().toInt()
     }
 
 
     fun findBlogList(pageUtil: PageQueryUtil): List<Blog> {
-        return listOf()
+        val qBlog = QBlog.blog
+
+        val keyword = pageUtil["keyword"]
+        val blogStatus = pageUtil["blogStatus"] as Byte
+        val blogCategoryId = pageUtil["blogCategoryId"] as Int
+        val start = pageUtil["start"] as Long
+        val limit = pageUtil["limit"] as Long
+
+        var predicate: BooleanExpression? = null
+        if(keyword != null) {
+            predicate = qBlog.blogTitle.like("%$keyword%").or(qBlog.blogCategoryName.like("%$keyword%"))
+        }
+
+        var predicate1: BooleanExpression? = null
+        if(blogStatus != null) {
+            predicate1 = qBlog.blogStatus.eq(blogStatus)
+        }
+
+        var predicate2: BooleanExpression? = null
+        if(blogCategoryId != null) {
+            predicate2 = qBlog.blogCategoryId.eq(blogCategoryId)
+        }
+
+        return queryFactory.selectFrom(qBlog)
+                .where(predicate)
+                .where(predicate1)
+                .where(predicate2)
+                .where(qBlog.isDeleted.eq(0))
+                .orderBy(OrderSpecifier(Order.DESC, qBlog.blogId))
+                .offset(start)
+                .limit(limit)
+                .fetchResults()
+                .results
     }
 
 
     fun findBlogListByType(type: Int, limit: Int): List<Blog> {
-        return listOf()
+        //todo test
+        val qBlog = QBlog.blog
+
+        var order: OrderSpecifier<Long>? = null
+
+        if(type != null && type == 0) {
+            order = OrderSpecifier(Order.DESC, qBlog.blogViews)
+        }
+
+        var order1: OrderSpecifier<Long>? = null
+
+        if(type != null && type == 0) {
+            order1 = OrderSpecifier(Order.DESC, qBlog.blogId)
+        }
+
+        return queryFactory.selectFrom(qBlog)
+                .where(qBlog.isDeleted.eq(0).and(qBlog.blogStatus.eq(1)))
+                .orderBy(order)
+                .orderBy(order1)
+                .limit(limit.toLong())
+                .fetchResults().results
     }
 
 
+    //todo test
     fun getTotalBlogs(pageUtil: PageQueryUtil): Int {
-        return 0
+        val qBlog = QBlog.blog
+
+        val keyword = pageUtil["keyword"]
+        val blogStatus = pageUtil["blogStatus"] as Byte
+        val blogCategoryId = pageUtil["blogCategoryId"] as Int
+
+        var predicate: BooleanExpression? = null
+        if(keyword != null) {
+            predicate = qBlog.blogTitle.like("%$keyword%").or(qBlog.blogCategoryName.like("%$keyword%"))
+        }
+
+        var predicate1: BooleanExpression? = null
+        if(blogStatus != null) {
+            predicate1 = qBlog.blogStatus.eq(blogStatus)
+        }
+
+        var predicate2: BooleanExpression? = null
+        if(blogCategoryId != null) {
+            predicate2 = qBlog.blogCategoryId.eq(blogCategoryId)
+        }
+
+        return queryFactory.selectFrom(qBlog)
+                .where(predicate)
+                .where(predicate1)
+                .where(predicate2)
+                .where(qBlog.isDeleted.eq(0))
+                .fetchCount().toInt()
     }
 
 
-    fun deleteBatch(ids: Array<Int>): Int {
-        return 0
+    @Transactional
+    fun deleteBatch(ids: List<Long>): Int {
+        val qBlog = QBlog.blog
+
+        return queryFactory.update(qBlog)
+                .set(qBlog.isDeleted, 1)
+                .where(qBlog.blogId.`in`(ids))
+                .execute()
+                .toInt()
     }
 
 
     fun getBlogsPageByTagId(pageUtil: PageQueryUtil): List<Blog> {
-        return listOf()
+        val qBlog = QBlog.blog
+        val qBlogTagRelation = QBlogTagRelation.blogTagRelation
+
+        val tagId = pageUtil["tagId"] as Int
+        val start = pageUtil["start"] as Long
+        val limit = pageUtil["limit"] as Long
+
+
+        val blogIds = queryFactory.select(qBlogTagRelation.blogId)
+                .from(qBlogTagRelation)
+                .where(qBlogTagRelation.tagId.eq(tagId))
+                .fetchResults()
+                .results
+
+        return queryFactory.selectFrom(qBlog)
+                .where(qBlog.blogStatus.eq(1).and(qBlog.isDeleted.eq(0)))
+                .where(qBlog.blogId.`in`(blogIds))
+                .orderBy(OrderSpecifier(Order.DESC, qBlog.blogId))
+                .offset(start)
+                .limit(limit)
+                .fetchResults()
+                .results
     }
 
 
     fun getTotalBlogsByTagId(pageUtil: PageQueryUtil): Int {
-        return 0
+        val qBlog = QBlog.blog
+        val qBlogTagRelation = QBlogTagRelation.blogTagRelation
+
+        val tagId = pageUtil["tagId"] as Int
+
+        val blogIds = queryFactory.select(qBlogTagRelation.blogId)
+                .from(qBlogTagRelation)
+                .where(qBlogTagRelation.tagId.eq(tagId))
+                .fetchResults()
+                .results
+
+        return queryFactory.selectFrom(qBlog)
+                .where(qBlog.blogStatus.eq(1).and(qBlog.isDeleted.eq(0)))
+                .where(qBlog.blogId.`in`(blogIds))
+                .fetchCount().toInt()
     }
 
 
     fun selectBySubUrl(subUrl: String): Blog {
-        return Blog()
+        val qBlog = QBlog.blog
+
+        return queryFactory.selectFrom(qBlog)
+                .where(qBlog.blogSubUrl.eq(subUrl).and(qBlog.isDeleted.eq(0)))
+                .limit(1)
+                .fetchFirst()
     }
 
+    @Transactional
+    fun updateBlogCategorys(categoryName: String, categoryId: Int, ids: List<Long>): Int {
+        val qBlog = QBlog.blog
 
-    fun updateBlogCategorys(categoryName: String, categoryId: Int?, ids: Array<Int>): Int {
-        return 0
+        return queryFactory.update(qBlog)
+                .set(qBlog.blogCategoryId, categoryId)
+                .set(qBlog.blogCategoryName, categoryName)
+                .where(qBlog.blogId.`in`(ids).and(qBlog.isDeleted.eq(0)))
+                .execute().toInt()
     }
 
 
