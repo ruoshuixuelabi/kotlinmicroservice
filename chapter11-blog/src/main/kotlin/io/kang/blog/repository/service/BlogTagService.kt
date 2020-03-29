@@ -1,6 +1,5 @@
 package io.kang.blog.repository
 
-import com.querydsl.core.Tuple
 import com.querydsl.core.types.Order
 import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.Path
