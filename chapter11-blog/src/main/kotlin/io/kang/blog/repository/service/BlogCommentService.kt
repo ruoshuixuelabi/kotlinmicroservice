@@ -177,7 +177,7 @@ class BlogCommentService {
         val qBlogComment = QBlogComment.blogComment
 
         val blogId = map["blogId"] as Long
-        val commentStatus = map["commentStatus"] as Byte
+        val commentStatus = map["commentStatus"] as Int
 
         var predicate: BooleanExpression? = null
         if (blogId != null) {
@@ -186,7 +186,7 @@ class BlogCommentService {
 
         var predicate1: BooleanExpression? = null
         if(commentStatus != null) {
-            predicate1 = qBlogComment.commentStatus.eq(commentStatus)
+            predicate1 = qBlogComment.commentStatus.eq(commentStatus.toByte())
         }
 
         return queryFactory.selectFrom(qBlogComment)

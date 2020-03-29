@@ -191,7 +191,7 @@ class BlogService {
         val qBlog = QBlog.blog
 
         val keyword = pageUtil["keyword"]
-        val blogStatus = pageUtil["blogStatus"] as Byte
+        val blogStatus = pageUtil["blogStatus"] as Int
         val blogCategoryId = pageUtil["blogCategoryId"] as Int
         val start = pageUtil["start"] as Long
         val limit = pageUtil["limit"] as Long
@@ -203,7 +203,7 @@ class BlogService {
 
         var predicate1: BooleanExpression? = null
         if(blogStatus != null) {
-            predicate1 = qBlog.blogStatus.eq(blogStatus)
+            predicate1 = qBlog.blogStatus.eq(blogStatus.toByte())
         }
 
         var predicate2: BooleanExpression? = null
@@ -254,7 +254,7 @@ class BlogService {
         val qBlog = QBlog.blog
 
         val keyword = pageUtil["keyword"]
-        val blogStatus = pageUtil["blogStatus"] as Byte
+        val blogStatus = pageUtil["blogStatus"] as Int
         val blogCategoryId = pageUtil["blogCategoryId"] as Int
 
         var predicate: BooleanExpression? = null
@@ -264,7 +264,7 @@ class BlogService {
 
         var predicate1: BooleanExpression? = null
         if(blogStatus != null) {
-            predicate1 = qBlog.blogStatus.eq(blogStatus)
+            predicate1 = qBlog.blogStatus.eq(blogStatus.toByte())
         }
 
         var predicate2: BooleanExpression? = null

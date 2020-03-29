@@ -124,23 +124,23 @@ class BlogTagService {
         val qBlog = QBlog.blog
 
         val result = queryFactory.select(qBlogTagRelation.tagId, qBlogTag.tagName, qBlogTagRelation.tagId.count().`as`("tagCount"))
-                .from(qBlogTagRelation, qBlog, qBlogTag)
+                .from(qBlogTagRelation)
                 .leftJoin(qBlog)
                 .on(qBlogTagRelation.blogId.eq(qBlog.blogId))
-                .leftJoin(qBlogTag)
-                .on(qBlogTagRelation.tagId.eq(qBlogTag.tagId))
                 .where(qBlog.isDeleted.eq(0))
-                .where(qBlogTag.isDeleted.eq(0))
                 .groupBy(qBlogTagRelation.tagId)
                 .orderBy(OrderSpecifier(Order.DESC, qBlogTagRelation.tagId.count()))
                 .limit(20)
+                .leftJoin(qBlogTag)
+                .on(qBlogTagRelation.tagId.eq(qBlogTag.tagId))
+                .where(qBlogTag.isDeleted.eq(0))
                 .fetchResults().results
 
         return result.map {
             val blogTagCount = BlogTagCount()
             blogTagCount.tagId = it.get(0, Int::class.java)
             blogTagCount.tagName = it.get(1, String::class.java)
-            blogTagCount.tagCount = it.get(2, Int::class.java)
+            blogTagCount.tagCount = it.get(2, Long::class.java)?.toInt()
             blogTagCount
         }.toList()
     }
