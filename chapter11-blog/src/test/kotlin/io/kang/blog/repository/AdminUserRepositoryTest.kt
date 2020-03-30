@@ -14,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 class AdminUserRepositoryTest  {
     @Autowired
-    lateinit var adminUserRepository: AdminUserService
+    lateinit var adminUserRepository: AdminUserDAO
 
     @Test
     @Order(1)

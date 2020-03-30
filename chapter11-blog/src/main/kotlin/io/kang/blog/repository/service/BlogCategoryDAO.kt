@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-class BlogCategoryService {
+class BlogCategoryDAO {
     @Autowired
     lateinit var queryFactory: JPAQueryFactory
 
@@ -140,7 +140,7 @@ class BlogCategoryService {
         }
     }
 
-    fun selectByCategoryIds(categoryIds: List<Int>): List<BlogCategory> {
+    fun selectByCategoryIds(categoryIds: List<Int?>): List<BlogCategory> {
         val qBlogCategory = QBlogCategory.blogCategory
 
         val predicate = qBlogCategory.categoryId.`in`(categoryIds)

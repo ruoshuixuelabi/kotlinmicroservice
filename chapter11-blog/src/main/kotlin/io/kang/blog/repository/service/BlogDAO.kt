@@ -14,7 +14,7 @@ import com.querydsl.core.types.Order
 import io.kang.blog.entity.QBlogTagRelation
 
 @Component
-class BlogService {
+class BlogDAO {
     @Autowired
     lateinit var queryFactory: JPAQueryFactory
 
@@ -45,7 +45,7 @@ class BlogService {
     }
 
 
-    fun selectByPrimaryKey(blogId: Long): Blog {
+    fun selectByPrimaryKey(blogId: Long?): Blog {
         val qBlog = QBlog.blog
 
         return queryFactory.selectFrom(qBlog)
@@ -250,7 +250,7 @@ class BlogService {
 
 
     //todo test
-    fun getTotalBlogs(pageUtil: PageQueryUtil): Int {
+    fun getTotalBlogs(pageUtil: PageQueryUtil?): Int {
         val qBlog = QBlog.blog
 
         val keyword = pageUtil["keyword"]

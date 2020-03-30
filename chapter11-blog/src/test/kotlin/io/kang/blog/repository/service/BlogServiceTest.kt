@@ -1,10 +1,9 @@
 package io.kang.blog.repository.service
 
-import io.kang.blog.repository.BlogService
+import io.kang.blog.repository.BlogDAO
 import io.kang.blog.util.PageQueryUtil
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.TestMethodOrder
 import org.junit.jupiter.api.extension.ExtendWith
@@ -17,7 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 class BlogServiceTest {
     @Autowired
-    lateinit var blogService: BlogService
+    lateinit var blogService: BlogDAO
 
     @Test
     fun findBlogListByType() {

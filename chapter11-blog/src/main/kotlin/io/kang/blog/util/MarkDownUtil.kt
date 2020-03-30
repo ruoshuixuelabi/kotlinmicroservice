@@ -6,7 +6,7 @@ import org.commonmark.renderer.html.HtmlRenderer
 import org.springframework.util.StringUtils
 
 object MarkDownUtil {
-    fun mdToHtml(markdownString: String): String {
+    fun mdToHtml(markdownString: String?): String {
         if (StringUtils.isEmpty(markdownString))
         {
             return ""

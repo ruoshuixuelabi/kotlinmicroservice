@@ -1,6 +1,6 @@
 package io.kang.blog.repository.service
 
-import io.kang.blog.repository.BlogTagService
+import io.kang.blog.repository.BlogTagDAO
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 class BlogTagServiceTest {
     @Autowired
-    lateinit var blogTagService: BlogTagService
+    lateinit var blogTagService: BlogTagDAO
 
     @Test
     fun getTagCount() {

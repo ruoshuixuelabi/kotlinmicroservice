@@ -2,7 +2,7 @@ package io.kang.blog.util
 
 import java.util.LinkedHashMap
 
-class PageQueryUtil(params: Map<String, Any>) : LinkedHashMap<String, Any>() {
+class PageQueryUtil(params: Map<String, Any?>) : LinkedHashMap<String, Any?>() {
     //当前页码
     var page: Int = 0
     //每页条数

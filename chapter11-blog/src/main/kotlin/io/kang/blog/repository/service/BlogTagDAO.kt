@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-class BlogTagService {
+class BlogTagDAO {
     @Autowired
     lateinit var queryFactory: JPAQueryFactory
 

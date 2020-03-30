@@ -1,7 +1,7 @@
 package io.kang.blog.repository.service
 
 import io.kang.blog.entity.BlogCategory
-import io.kang.blog.repository.BlogCategoryService
+import io.kang.blog.repository.BlogCategoryDAO
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.MethodOrderer
@@ -17,7 +17,7 @@ import java.util.*
 @ExtendWith(SpringExtension::class)
 class BlogCategoryServiceTest {
     @Autowired
-    lateinit var blogCategoryService: BlogCategoryService
+    lateinit var blogCategoryService: BlogCategoryDAO
 
     @Test
     fun updateByPrimaryKeySelective() {

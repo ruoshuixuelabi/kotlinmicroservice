@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-class BlogLinkService {
+class BlogLinkDAO {
     @Autowired
     lateinit var queryFactory: JPAQueryFactory
 

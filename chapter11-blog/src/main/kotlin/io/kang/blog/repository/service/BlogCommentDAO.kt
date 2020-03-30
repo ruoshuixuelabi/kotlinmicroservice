@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-class BlogCommentService {
+class BlogCommentDAO {
     @Autowired
     lateinit var queryFactory: JPAQueryFactory
 

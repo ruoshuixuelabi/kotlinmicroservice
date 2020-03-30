@@ -1,6 +1,6 @@
 package io.kang.blog.repository.service
 
-import io.kang.blog.repository.BlogCommentService
+import io.kang.blog.repository.BlogCommentDAO
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.MethodOrderer
@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 class BlogCommentServiceTest {
     @Autowired
-    lateinit var blogCommentService: BlogCommentService
+    lateinit var blogCommentService: BlogCommentDAO
 
     @Test
     fun findBlogCommentList() {

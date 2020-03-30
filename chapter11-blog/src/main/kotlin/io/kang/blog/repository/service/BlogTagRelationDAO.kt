@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-class BlogTagRelationService {
+class BlogTagRelationDAO {
     @Autowired
     lateinit var queryFactory: JPAQueryFactory
 
@@ -111,7 +111,7 @@ class BlogTagRelationService {
     }
 
     @Transactional
-    fun deleteByBlogId(blogId: Long): Int {
+    fun deleteByBlogId(blogId: Long?): Int {
         val qBlogTagRelation = QBlogTagRelation.blogTagRelation
 
         return queryFactory.delete(qBlogTagRelation)
