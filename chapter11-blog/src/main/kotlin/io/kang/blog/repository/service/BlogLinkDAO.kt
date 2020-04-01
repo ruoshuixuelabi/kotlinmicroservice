@@ -115,24 +115,28 @@ class BlogLinkDAO {
                 .execute().toInt()
     }
 
-    fun findLinkList(pageUtil: PageQueryUtil): List<BlogLink> {
+    fun findLinkList(pageUtil: PageQueryUtil?): List<BlogLink> {
         val qBlogLink = QBlogLink.blogLink
 
-        val start = pageUtil["start"] as Long
-        val limit = pageUtil["limit"] as Long
+        if (pageUtil != null) {
+            val start = pageUtil["start"] as Long
+            val limit = pageUtil["limit"] as Long
 
-        return if(start != null && limit != null) {
-            queryFactory.selectFrom(qBlogLink)
+            if(start != null && limit != null) {
+                return queryFactory.selectFrom(qBlogLink)
                     .where(qBlogLink.isDeleted.eq(0))
                     .orderBy(OrderSpecifier(Order.DESC, qBlogLink.linkId))
                     .offset(start)
                     .limit(limit)
                     .fetchResults()
                     .results
-        }else listOf()
+            }
+        }
+
+        return listOf()
     }
 
-    fun getTotalLinks(pageUtil: PageQueryUtil): Int {
+    fun getTotalLinks(pageUtil: PageQueryUtil?): Int {
         val qBlogLink = QBlogLink.blogLink
 
         return queryFactory.selectFrom(qBlogLink)

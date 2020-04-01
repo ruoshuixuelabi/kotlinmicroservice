@@ -253,22 +253,21 @@ class BlogDAO {
     fun getTotalBlogs(pageUtil: PageQueryUtil?): Int {
         val qBlog = QBlog.blog
 
-        val keyword = pageUtil["keyword"]
-        val blogStatus = pageUtil["blogStatus"] as Int
-        val blogCategoryId = pageUtil["blogCategoryId"] as Int
-
         var predicate: BooleanExpression? = null
-        if(keyword != null) {
+        if(pageUtil!= null && pageUtil["keyword"] != null) {
+            val keyword = pageUtil["keyword"]
             predicate = qBlog.blogTitle.like("%$keyword%").or(qBlog.blogCategoryName.like("%$keyword%"))
         }
 
         var predicate1: BooleanExpression? = null
-        if(blogStatus != null) {
+        if(pageUtil != null && pageUtil["blogStatus"] != null) {
+            val blogStatus = pageUtil["blogStatus"] as Int
             predicate1 = qBlog.blogStatus.eq(blogStatus.toByte())
         }
 
         var predicate2: BooleanExpression? = null
-        if(blogCategoryId != null) {
+        if(pageUtil != null && pageUtil["blogCategoryId"] != null) {
+            val blogCategoryId = pageUtil["blogCategoryId"] as Int
             predicate2 = qBlog.blogCategoryId.eq(blogCategoryId)
         }
 

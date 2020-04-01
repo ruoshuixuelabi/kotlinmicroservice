@@ -29,7 +29,7 @@ interface CommentService {
      * @param ids
      * @return
      */
-    fun checkDone(ids: Array<Int>): Boolean
+    fun checkDone(ids: List<Long>): Boolean
 
     /**
      * 批量删除
@@ -37,7 +37,7 @@ interface CommentService {
      * @param ids
      * @return
      */
-    fun deleteBatch(ids: Array<Int>): Boolean
+    fun deleteBatch(ids: List<Long>): Boolean
 
     /**
      * 添加回复
@@ -55,5 +55,5 @@ interface CommentService {
      * @param page
      * @return
      */
-    fun getCommentPageByBlogIdAndPageNum(blogId: Long, page: Int): PageResult
+    fun getCommentPageByBlogIdAndPageNum(blogId: Long, page: Int): PageResult?
 }

@@ -17,7 +17,7 @@ interface TagService {
 
     fun saveTag(tagName: String): Boolean?
 
-    fun deleteBatch(ids: Array<Int>): Boolean?
+    fun deleteBatch(ids: List<Int>): Boolean?
 
     fun getBlogTagCountForIndex(): List<BlogTagCount>
 }

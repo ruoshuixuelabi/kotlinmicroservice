@@ -21,7 +21,7 @@ interface LinkService {
 
     fun updateLink(tempLink: BlogLink): Boolean?
 
-    fun deleteBatch(ids: Array<Int>): Boolean?
+    fun deleteBatch(ids: List<Int>): Boolean
 
     /**
      * 返回友链页面所需的所有数据

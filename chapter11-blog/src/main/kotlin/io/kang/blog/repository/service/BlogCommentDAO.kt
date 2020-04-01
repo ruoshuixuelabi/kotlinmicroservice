@@ -173,20 +173,17 @@ class BlogCommentDAO {
         }
     }
 
-    fun getTotalBlogComments(map: Map<*, *>): Int {
+    fun getTotalBlogComments(map: Map<*, *>?): Int {
         val qBlogComment = QBlogComment.blogComment
 
-        val blogId = map["blogId"] as Long
-        val commentStatus = map["commentStatus"] as Int
-
         var predicate: BooleanExpression? = null
-        if (blogId != null) {
-            predicate = qBlogComment.blogId.eq(blogId)
+        if (map != null && map["blogId"] != null) {
+            predicate = qBlogComment.blogId.eq(map["blogId"] as Long)
         }
 
         var predicate1: BooleanExpression? = null
-        if(commentStatus != null) {
-            predicate1 = qBlogComment.commentStatus.eq(commentStatus.toByte())
+        if(map != null && map["commentStatus"] != null) {
+            predicate1 = qBlogComment.commentStatus.eq((map["commentStatus"] as Int).toByte())
         }
 
         return queryFactory.selectFrom(qBlogComment)

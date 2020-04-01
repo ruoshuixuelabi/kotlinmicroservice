@@ -146,7 +146,7 @@ class BlogTagDAO {
     }
 
 
-    fun getTotalTags(pageUtil: PageQueryUtil): Int {
+    fun getTotalTags(pageUtil: PageQueryUtil?): Int {
         val qBlogTag = QBlogTag.blogTag
 
         return queryFactory.selectFrom(qBlogTag)

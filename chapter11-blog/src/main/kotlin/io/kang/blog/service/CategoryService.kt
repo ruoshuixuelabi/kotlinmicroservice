@@ -26,7 +26,7 @@ interface CategoryService {
 
     fun updateCategory(categoryId: Int, categoryName: String, categoryIcon: String): Boolean
 
-    fun deleteBatch(ids: Array<Int>): Boolean
+    fun deleteBatch(ids: List<Int>): Boolean
 
     fun getAllCategories(): List<BlogCategory>
 }

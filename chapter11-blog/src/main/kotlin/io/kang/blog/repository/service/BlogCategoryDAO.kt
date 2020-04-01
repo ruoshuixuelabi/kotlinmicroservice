@@ -120,7 +120,10 @@ class BlogCategoryDAO {
                 .toInt()
     }
 
-    fun findCategoryList(pageUtil: PageQueryUtil): List<BlogCategory> {
+    fun findCategoryList(pageUtil: PageQueryUtil?): List<BlogCategory> {
+
+        if(pageUtil == null) return listOf()
+
         val qBlogCategory = QBlogCategory.blogCategory
 
         val start = pageUtil["start"] as Long
@@ -151,7 +154,7 @@ class BlogCategoryDAO {
                 .fetch()
     }
 
-    fun getTotalCategories(pageUtil: PageQueryUtil): Int {
+    fun getTotalCategories(pageUtil: PageQueryUtil?): Int {
         val qBlogCategory = QBlogCategory.blogCategory
 
         return queryFactory.selectFrom(qBlogCategory)
