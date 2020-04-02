@@ -25,7 +25,7 @@ class LinkServiceImpl: LinkService {
         return blogLinkDAO.getTotalLinks(null)
     }
 
-    override fun saveLink(link: BlogLink): Boolean? {
+    override fun saveLink(link: BlogLink): Boolean {
         return blogLinkDAO.insertSelective(link) > 0
     }
 
@@ -33,7 +33,7 @@ class LinkServiceImpl: LinkService {
         return blogLinkDAO.selectByPrimaryKey(id)
     }
 
-    override fun updateLink(tempLink: BlogLink): Boolean? {
+    override fun updateLink(tempLink: BlogLink): Boolean {
         return blogLinkDAO.updateByPrimaryKeySelective(tempLink) > 0
     }
 

@@ -147,16 +147,16 @@ class BlogCommentDAO {
 
         val start = map["start"] as Int
         val limit = map["limit"] as Int
-        val blogId = map["blogId"] as Int
-        val commentStatus = map["commentStatus"] as Int
 
         var predicate: BooleanExpression? = null
-        if (blogId != null) {
-            predicate = qBlogComment.blogId.eq(blogId.toLong())
+        if (map != null && map["blogId"] != null) {
+            val blogId = map["blogId"] as Long
+            predicate = qBlogComment.blogId.eq(blogId)
         }
 
         var predicate1: BooleanExpression? = null
-        if(commentStatus != null) {
+        if(map != null && map["commentStatus"] != null) {
+            val commentStatus = map["commentStatus"] as Int
             predicate1 = qBlogComment.commentStatus.eq(commentStatus.toByte())
         }
         return if(start != null && limit != null) {

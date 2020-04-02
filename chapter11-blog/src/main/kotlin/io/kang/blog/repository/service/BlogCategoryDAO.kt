@@ -126,16 +126,16 @@ class BlogCategoryDAO {
 
         val qBlogCategory = QBlogCategory.blogCategory
 
-        val start = pageUtil["start"] as Long
-        val limit = pageUtil["limit"] as Long
+        val start = pageUtil["start"] as Int
+        val limit = pageUtil["limit"] as Int
 
         return if(start != null && limit != null) {
             queryFactory.selectFrom(qBlogCategory)
                     .where(qBlogCategory.isDeleted.eq(0))
                     .orderBy(OrderSpecifier(Order.DESC, qBlogCategory.categoryRank))
                     .orderBy(OrderSpecifier(Order.DESC, qBlogCategory.createTime))
-                    .offset(start)
-                    .limit(limit)
+                    .offset(start.toLong())
+                    .limit(limit.toLong())
                     .fetchResults()
                     .results
         }else {

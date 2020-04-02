@@ -15,11 +15,11 @@ interface LinkService {
 
     fun getTotalLinks(): Int
 
-    fun saveLink(link: BlogLink): Boolean?
+    fun saveLink(link: BlogLink): Boolean
 
     fun selectById(id: Int?): BlogLink
 
-    fun updateLink(tempLink: BlogLink): Boolean?
+    fun updateLink(tempLink: BlogLink): Boolean
 
     fun deleteBatch(ids: List<Int>): Boolean
 

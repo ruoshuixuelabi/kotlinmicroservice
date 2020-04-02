@@ -190,24 +190,24 @@ class BlogDAO {
     fun findBlogList(pageUtil: PageQueryUtil): List<Blog> {
         val qBlog = QBlog.blog
 
-        val keyword = pageUtil["keyword"]
-        val blogStatus = pageUtil["blogStatus"] as Int
-        val blogCategoryId = pageUtil["blogCategoryId"] as Int
-        val start = pageUtil["start"] as Long
-        val limit = pageUtil["limit"] as Long
+        val start = pageUtil["start"] as Int
+        val limit = pageUtil["limit"] as Int
 
         var predicate: BooleanExpression? = null
-        if(keyword != null) {
+        if(pageUtil != null && pageUtil["keyword"] != null) {
+            val keyword = pageUtil["keyword"]
             predicate = qBlog.blogTitle.like("%$keyword%").or(qBlog.blogCategoryName.like("%$keyword%"))
         }
 
         var predicate1: BooleanExpression? = null
-        if(blogStatus != null) {
+        if(pageUtil != null && pageUtil["blogStatus"] != null) {
+            val blogStatus = pageUtil["blogStatus"] as Int
             predicate1 = qBlog.blogStatus.eq(blogStatus.toByte())
         }
 
         var predicate2: BooleanExpression? = null
-        if(blogCategoryId != null) {
+        if(pageUtil != null && pageUtil["blogCategoryId"] != null) {
+            val blogCategoryId = pageUtil["blogCategoryId"] as Int
             predicate2 = qBlog.blogCategoryId.eq(blogCategoryId)
         }
 
@@ -217,8 +217,8 @@ class BlogDAO {
                 .where(predicate2)
                 .where(qBlog.isDeleted.eq(0))
                 .orderBy(OrderSpecifier(Order.DESC, qBlog.blogId))
-                .offset(start)
-                .limit(limit)
+                .offset(start.toLong())
+                .limit(limit.toLong())
                 .fetchResults()
                 .results
     }
@@ -229,21 +229,18 @@ class BlogDAO {
         val qBlog = QBlog.blog
 
         var order: OrderSpecifier<Long>? = null
-
         if(type != null && type == 0) {
             order = OrderSpecifier(Order.DESC, qBlog.blogViews)
         }
 
-        var order1: OrderSpecifier<Long>? = null
+        if(type != null && type == 1) {
+            order = OrderSpecifier(Order.DESC, qBlog.blogId)
 
-        if(type != null && type == 0) {
-            order1 = OrderSpecifier(Order.DESC, qBlog.blogId)
         }
 
         return queryFactory.selectFrom(qBlog)
                 .where(qBlog.isDeleted.eq(0).and(qBlog.blogStatus.eq(1)))
                 .orderBy(order)
-                .orderBy(order1)
                 .limit(limit.toLong())
                 .fetchResults().results
     }
@@ -297,8 +294,8 @@ class BlogDAO {
         val qBlogTagRelation = QBlogTagRelation.blogTagRelation
 
         val tagId = pageUtil["tagId"] as Int
-        val start = pageUtil["start"] as Long
-        val limit = pageUtil["limit"] as Long
+        val start = pageUtil["start"] as Int
+        val limit = pageUtil["limit"] as Int
 
 
         val blogIds = queryFactory.select(qBlogTagRelation.blogId)
@@ -311,8 +308,8 @@ class BlogDAO {
                 .where(qBlog.blogStatus.eq(1).and(qBlog.isDeleted.eq(0)))
                 .where(qBlog.blogId.`in`(blogIds))
                 .orderBy(OrderSpecifier(Order.DESC, qBlog.blogId))
-                .offset(start)
-                .limit(limit)
+                .offset(start.toLong())
+                .limit(limit.toLong())
                 .fetchResults()
                 .results
     }
@@ -337,13 +334,13 @@ class BlogDAO {
     }
 
 
-    fun selectBySubUrl(subUrl: String): Blog {
+    fun selectBySubUrl(subUrl: String): Blog? {
         val qBlog = QBlog.blog
 
         return queryFactory.selectFrom(qBlog)
                 .where(qBlog.blogSubUrl.eq(subUrl).and(qBlog.isDeleted.eq(0)))
                 .limit(1)
-                .fetchFirst()
+                .fetchOne()
     }
 
     @Transactional

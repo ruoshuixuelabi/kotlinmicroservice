@@ -106,14 +106,14 @@ class BlogTagDAO {
     fun findTagList(pageUtil: PageQueryUtil): List<BlogTag> {
         val qBlogTag = QBlogTag.blogTag
 
-        val start = pageUtil["start"] as Long
-        val limit = pageUtil["limit"] as Long
+        val start = pageUtil["start"] as Int
+        val limit = pageUtil["limit"] as Int
 
         return  queryFactory.selectFrom(qBlogTag)
                 .where(qBlogTag.isDeleted.eq(0))
                 .orderBy(OrderSpecifier(Order.DESC, qBlogTag.tagId))
-                .offset(start)
-                .limit(limit)
+                .offset(start.toLong())
+                .limit(limit.toLong())
                 .fetchResults().results
     }
 

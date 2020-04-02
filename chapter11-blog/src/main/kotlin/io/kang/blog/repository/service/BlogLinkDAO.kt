@@ -119,15 +119,15 @@ class BlogLinkDAO {
         val qBlogLink = QBlogLink.blogLink
 
         if (pageUtil != null) {
-            val start = pageUtil["start"] as Long
-            val limit = pageUtil["limit"] as Long
+            val start = pageUtil["start"] as Int
+            val limit = pageUtil["limit"] as Int
 
             if(start != null && limit != null) {
                 return queryFactory.selectFrom(qBlogLink)
                     .where(qBlogLink.isDeleted.eq(0))
                     .orderBy(OrderSpecifier(Order.DESC, qBlogLink.linkId))
-                    .offset(start)
-                    .limit(limit)
+                    .offset(start.toLong())
+                    .limit(limit.toLong())
                     .fetchResults()
                     .results
             }

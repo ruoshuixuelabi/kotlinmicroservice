@@ -29,7 +29,7 @@ class TagServiceImpl: TagService {
         return blogTagDAO.getTotalTags(null)
     }
 
-    override fun saveTag(tagName: String): Boolean? {
+    override fun saveTag(tagName: String): Boolean {
         val temp = blogTagDAO.selectByTagName(tagName)
         if (temp == null) {
             val blogTag = BlogTag()
@@ -39,7 +39,7 @@ class TagServiceImpl: TagService {
         return false
     }
 
-    override fun deleteBatch(ids: List<Int>): Boolean? {
+    override fun deleteBatch(ids: List<Int>): Boolean {
         //已存在关联关系不删除
         val relations = relationDAO.selectDistinctTagIds(ids)
         return if (!CollectionUtils.isEmpty(relations)) {
