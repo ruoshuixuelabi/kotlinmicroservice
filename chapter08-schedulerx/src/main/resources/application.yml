@@ -6,8 +6,6 @@ spring:
   cloud:
     alicloud:
       scx:
-        group-id:
+        group-id: ***
       edas:
-        namespace:
-      access-key: LTAI4FvUmYLSLkp6HMa7bxnj
-      secret-key: C6fGpxqBWjlRTlG9zKFGPkQzE81DdZ
+        namespace: cn-test
