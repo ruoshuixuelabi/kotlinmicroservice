@@ -38,6 +38,7 @@
 		<module>chapter10-skywalking</module>
 		<module>chapter10-skywalking1</module>
         <module>chapter11-blog</module>
+        <module>chapter02</module>
     </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
