@@ -166,6 +166,7 @@ class BlogServiceImpl: BlogService {
             val blogTagRelation = BlogTagRelation()
             blogTagRelation.blogId = blog.blogId
             blogTagRelation.tagId = tag.tagId
+            blogTagRelation.createTime = Date()
             blogTagRelations.add(blogTagRelation)
         }
         //修改blog信息->修改分类排序值->删除原关系数据->保存新的关系数据

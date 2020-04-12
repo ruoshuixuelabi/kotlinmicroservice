@@ -2,59 +2,58 @@ package io.kang.blog.entity
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "tb_blog")
 class Blog {
     @Id
-    var blogId: Long? = null
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var blogId: Long = 0
 
-    var blogTitle: String? = null
+    var blogTitle: String = ""
         set(blogTitle) {
-            field = blogTitle?.trim { it <= ' ' }
+            field = blogTitle.trim { it <= ' ' }
         }
 
-    var blogSubUrl: String? = null
+    var blogSubUrl: String = ""
         set(blogSubUrl) {
-            field = blogSubUrl?.trim { it <= ' ' }
+            field = blogSubUrl.trim { it <= ' ' }
         }
 
-    var blogCoverImage: String? = null
+    var blogCoverImage: String = ""
         set(blogCoverImage) {
-            field = blogCoverImage?.trim { it <= ' ' }
+            field = blogCoverImage.trim { it <= ' ' }
         }
 
-    var blogCategoryId: Int? = null
+    var blogCategoryId: Int = 0
 
-    var blogCategoryName: String? = null
+    var blogCategoryName: String = ""
         set(blogCategoryName) {
-            field = blogCategoryName?.trim { it <= ' ' }
+            field = blogCategoryName.trim { it <= ' ' }
         }
 
-    var blogTags: String? = null
+    var blogTags: String = ""
         set(blogTags) {
-            field = blogTags?.trim { it <= ' ' }
+            field = blogTags.trim { it <= ' ' }
         }
 
-    var blogStatus: Byte? = null
+    var blogStatus: Byte = 0
 
-    var blogViews: Long? = null
+    var blogViews: Long = 0
 
-    var enableComment: Byte? = null
+    var enableComment: Byte = 0
 
-    var isDeleted: Byte? = null
+    var isDeleted: Byte = 0
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    var createTime: Date? = null
+    var createTime: Date = Date()
 
-    var updateTime: Date? = null
+    var updateTime: Date = Date()
 
-    var blogContent: String? = null
+    var blogContent: String = ""
         set(blogContent) {
-            field = blogContent?.trim { it <= ' ' }
+            field = blogContent.trim { it <= ' ' }
         }
 
     override fun toString(): String {

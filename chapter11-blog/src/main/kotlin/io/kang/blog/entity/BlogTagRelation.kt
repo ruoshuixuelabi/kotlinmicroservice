@@ -1,5 +1,6 @@
 package io.kang.blog.entity
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import java.util.*
 import javax.persistence.*
 
@@ -10,11 +11,12 @@ class BlogTagRelation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var relationId: Long? = null
 
-    var blogId: Long? = null
+    var blogId: Long = 0
 
-    var tagId: Int? = null
+    var tagId: Int = 0
 
-    var createTime: Date? = null
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    var createTime: Date = Date()
 
     override fun toString(): String {
         return "${javaClass.simpleName} [Hash = ${hashCode()}, relationId=$relationId, " +

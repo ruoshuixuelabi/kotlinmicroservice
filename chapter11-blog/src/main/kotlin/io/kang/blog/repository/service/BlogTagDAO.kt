@@ -138,9 +138,9 @@ class BlogTagDAO {
 
         return result.map {
             val blogTagCount = BlogTagCount()
-            blogTagCount.tagId = it.get(0, Int::class.java)
-            blogTagCount.tagName = it.get(1, String::class.java)
-            blogTagCount.tagCount = it.get(2, Long::class.java)?.toInt()
+            blogTagCount.tagId = it.get(0, Int::class.java)!!
+            blogTagCount.tagName = it.get(1, String::class.java)!!
+            blogTagCount.tagCount = it.get(2, Long::class.java)?.toInt()!!
             blogTagCount
         }.toList()
     }

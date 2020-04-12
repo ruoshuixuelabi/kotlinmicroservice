@@ -1,11 +1,11 @@
 package io.kang.blog.entity
 
 class BlogTagCount {
-    var tagId: Int? = null
+    var tagId: Int = 0
 
-    var tagName: String? = null
+    var tagName: String = ""
 
-    var tagCount: Int? = null
+    var tagCount: Int = 0
 
     override fun toString(): String {
         return "tagId:$tagId, tagName:$tagName, tagCount:$tagCount"

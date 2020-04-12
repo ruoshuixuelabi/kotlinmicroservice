@@ -42,7 +42,7 @@ class ConfigServiceImpl: ConfigService {
     override fun getAllConfigs(): Map<String, String> {
         //获取所有的map并封装为map
         val blogConfigs = blogConfigDAO.selectAll()
-        return blogConfigs.map { it.configName!! to transfer(it.configName!!, it.configValue!!) }.toMap()
+        return blogConfigs.associateBy({it.configName!!}, {it.configValue!!})
     }
     
     private fun transfer(key: String, value: String): String {

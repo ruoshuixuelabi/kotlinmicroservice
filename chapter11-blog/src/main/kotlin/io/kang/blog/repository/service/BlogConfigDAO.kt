@@ -6,6 +6,7 @@ import io.kang.blog.entity.BlogConfig
 import io.kang.blog.entity.QBlogConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
 class BlogConfigDAO {
@@ -30,6 +31,7 @@ class BlogConfigDAO {
                 .fetchFirst()
     }
 
+    @Transactional
     fun updateByPrimaryKeySelective(record: BlogConfig): Int {
         val qBlogConfig = QBlogConfig.blogConfig
 

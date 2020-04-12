@@ -24,7 +24,7 @@ class CommentController {
             return ResultGenerator.genFailResult("参数异常！")
         }
         val pageUtil = PageQueryUtil(params)
-        return ResultGenerator.genSuccessResult(commentService!!.getCommentsPage(pageUtil))
+        return ResultGenerator.genSuccessResult(commentService.getCommentsPage(pageUtil))
     }
 
     @PostMapping("/comments/checkDone")
@@ -33,7 +33,7 @@ class CommentController {
         if (ids.size < 1) {
             return ResultGenerator.genFailResult("参数异常！")
         }
-        return if (commentService!!.checkDone(ids)) {
+        return if (commentService.checkDone(ids)) {
             ResultGenerator.genSuccessResult()
         } else {
             ResultGenerator.genFailResult("审核失败")
@@ -60,7 +60,7 @@ class CommentController {
         if (ids.size < 1) {
             return ResultGenerator.genFailResult("参数异常！")
         }
-        return if (commentService!!.deleteBatch(ids)) {
+        return if (commentService.deleteBatch(ids)) {
             ResultGenerator.genSuccessResult()
         } else {
             ResultGenerator.genFailResult("刪除失败")

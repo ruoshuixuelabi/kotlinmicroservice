@@ -70,12 +70,12 @@ class BlogController {
     @ResponseBody
     fun save(@RequestParam("blogTitle") blogTitle: String,
              @RequestParam(name = "blogSubUrl", required = false) blogSubUrl: String,
-             @RequestParam("blogCategoryId") blogCategoryId: Int?,
+             @RequestParam("blogCategoryId") blogCategoryId: Int,
              @RequestParam("blogTags") blogTags: String,
              @RequestParam("blogContent") blogContent: String,
              @RequestParam("blogCoverImage") blogCoverImage: String,
-             @RequestParam("blogStatus") blogStatus: Byte?,
-             @RequestParam("enableComment") enableComment: Byte?): Result<Any> {
+             @RequestParam("blogStatus") blogStatus: Byte,
+             @RequestParam("enableComment") enableComment: Byte): Result<Any> {
         if (StringUtils.isEmpty(blogTitle)) {
             return ResultGenerator.genFailResult("请输入文章标题")
         }
@@ -119,15 +119,15 @@ class BlogController {
 
     @PostMapping("/blogs/update")
     @ResponseBody
-    fun update(@RequestParam("blogId") blogId: Long?,
+    fun update(@RequestParam("blogId") blogId: Long,
                @RequestParam("blogTitle") blogTitle: String,
                @RequestParam(name = "blogSubUrl", required = false) blogSubUrl: String,
-               @RequestParam("blogCategoryId") blogCategoryId: Int?,
+               @RequestParam("blogCategoryId") blogCategoryId: Int,
                @RequestParam("blogTags") blogTags: String,
                @RequestParam("blogContent") blogContent: String,
                @RequestParam("blogCoverImage") blogCoverImage: String,
-               @RequestParam("blogStatus") blogStatus: Byte?,
-               @RequestParam("enableComment") enableComment: Byte?): Result<Any> {
+               @RequestParam("blogStatus") blogStatus: Byte,
+               @RequestParam("enableComment") enableComment: Byte): Result<Any> {
         if (StringUtils.isEmpty(blogTitle)) {
             return ResultGenerator.genFailResult("请输入文章标题")
         }

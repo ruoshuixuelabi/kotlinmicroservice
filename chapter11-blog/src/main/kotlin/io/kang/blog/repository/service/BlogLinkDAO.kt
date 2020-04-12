@@ -133,7 +133,11 @@ class BlogLinkDAO {
             }
         }
 
-        return listOf()
+        return return queryFactory.selectFrom(qBlogLink)
+                .where(qBlogLink.isDeleted.eq(0))
+                .orderBy(OrderSpecifier(Order.DESC, qBlogLink.linkId))
+                .fetchResults()
+                .results
     }
 
     fun getTotalLinks(pageUtil: PageQueryUtil?): Int {

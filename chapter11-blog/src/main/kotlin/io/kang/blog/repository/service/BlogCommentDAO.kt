@@ -163,6 +163,7 @@ class BlogCommentDAO {
             queryFactory.selectFrom(qBlogComment)
                     .where(predicate)
                     .where(predicate1)
+                    .where(qBlogComment.isDeleted.eq(0))
                     .orderBy(OrderSpecifier(Order.DESC, qBlogComment.commentId))
                     .offset(start.toLong())
                     .limit(limit.toLong())
@@ -199,7 +200,7 @@ class BlogCommentDAO {
         val qBlogComment = QBlogComment.blogComment
 
         return queryFactory.update(qBlogComment)
-                .set(qBlogComment.isDeleted, 1)
+                .set(qBlogComment.commentStatus, 1)
                 .where(qBlogComment.commentId.`in`(ids).and(qBlogComment.commentStatus.eq(0)))
                 .execute()
                 .toInt()

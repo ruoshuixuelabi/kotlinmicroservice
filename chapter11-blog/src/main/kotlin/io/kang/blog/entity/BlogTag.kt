@@ -2,25 +2,24 @@ package io.kang.blog.entity
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "tb_blog_tag")
 class BlogTag {
     @Id
-    var tagId: Int? = null
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var tagId: Int = 0
 
-    var tagName: String? = null
+    var tagName: String = ""
         set(tagName) {
-            field = tagName?.trim { it <= ' ' }
+            field = tagName.trim { it <= ' ' }
         }
 
-    var isDeleted: Byte? = null
+    var isDeleted: Byte = 0
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    var createTime: Date? = null
+    var createTime: Date = Date()
 
     override fun toString(): String {
         return "${javaClass.simpleName} [Hash = ${hashCode()}, tagId=$tagId, tagName=$tagName, isDeleted=$isDeleted, createTime=$createTime]"
