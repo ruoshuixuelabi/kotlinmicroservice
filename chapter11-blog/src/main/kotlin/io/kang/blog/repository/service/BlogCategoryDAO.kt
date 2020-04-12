@@ -121,10 +121,14 @@ class BlogCategoryDAO {
     }
 
     fun findCategoryList(pageUtil: PageQueryUtil?): List<BlogCategory> {
-
-        if(pageUtil == null) return listOf()
-
         val qBlogCategory = QBlogCategory.blogCategory
+
+        if(pageUtil == null) return queryFactory.selectFrom(qBlogCategory)
+                .where(qBlogCategory.isDeleted.eq(0))
+                .orderBy(OrderSpecifier(Order.DESC, qBlogCategory.categoryRank))
+                .orderBy(OrderSpecifier(Order.DESC, qBlogCategory.createTime))
+                .fetchResults()
+                .results
 
         val start = pageUtil["start"] as Int
         val limit = pageUtil["limit"] as Int
@@ -139,7 +143,12 @@ class BlogCategoryDAO {
                     .fetchResults()
                     .results
         }else {
-            listOf()
+            queryFactory.selectFrom(qBlogCategory)
+                    .where(qBlogCategory.isDeleted.eq(0))
+                    .orderBy(OrderSpecifier(Order.DESC, qBlogCategory.categoryRank))
+                    .orderBy(OrderSpecifier(Order.DESC, qBlogCategory.createTime))
+                    .fetchResults()
+                    .results
         }
     }
 
