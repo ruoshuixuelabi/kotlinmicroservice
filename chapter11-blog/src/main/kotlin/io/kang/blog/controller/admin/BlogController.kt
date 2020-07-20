@@ -21,6 +21,7 @@ import javax.annotation.Resource
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import io.kang.blog.util.Result
+import org.springframework.beans.factory.annotation.Value
 import java.io.File
 
 @Controller
@@ -32,6 +33,9 @@ class BlogController {
 
     @Resource
     lateinit var categoryService: CategoryService
+
+    @Value("\${upload.dir}")
+    var uploadDir: String? = null
 
     @GetMapping("/blogs/list")
     @ResponseBody
@@ -185,9 +189,9 @@ class BlogController {
         tempName.append(sdf.format(Date())).append(r.nextInt(100)).append(suffixName)
         val newFileName = tempName.toString()
         //创建文件
-        val destFile = File(Constants.FILE_UPLOAD_DIC + newFileName)
+        val destFile = File(uploadDir + newFileName)
         val fileUrl = MyBlogUtils.getHost(URI(request.requestURL.toString() + "")).toString() + "/upload/" + newFileName
-        val fileDirectory = File(Constants.FILE_UPLOAD_DIC)
+        val fileDirectory = File(uploadDir)
         try {
             if (!fileDirectory.exists()) {
                 if (!fileDirectory.mkdir()) {

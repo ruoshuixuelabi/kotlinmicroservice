@@ -3,8 +3,8 @@ package io.kang.chapter03.basicsyntax
 fun main() {
     //List
     val bob = Person("Bob", 31)
-    val people = listOf<Person>(Person("Adam", 20), bob, bob)
-    val people2 = listOf<Person>(Person("Adam", 20), Person("Bob", 31), bob)
+    val people = listOf<Person>(bob, bob, Person("Bob", 31))
+    val people2 = listOf<Person>(bob, bob, bob)
     println(people == people2)
     bob.age = 32
     println(people == people2)
@@ -130,7 +130,7 @@ fun main() {
 
     //限长序列
     val oddNumbersLessThan10 = generateSequence(1) { if (it < 10) it + 2 else null }
-    println(oddNumbersLessThan10.count())
+    println(oddNumbersLessThan10.toList())
 
     val oddNumbers1 = sequence {
         yield(1)

@@ -17,10 +17,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 import io.kang.blog.util.Result
+import org.springframework.beans.factory.annotation.Value
 
 @Controller
 @RequestMapping("/admin")
 class UploadController {
+
+    @Value("\${upload.dir}")
+    var uploadDir: String? = null
 
     @PostMapping("/upload/file")
     @ResponseBody
@@ -34,9 +38,9 @@ class UploadController {
         val tempName = StringBuilder()
         tempName.append(sdf.format(Date())).append(r.nextInt(100)).append(suffixName)
         val newFileName = tempName.toString()
-        val fileDirectory = File(Constants.FILE_UPLOAD_DIC)
+        val fileDirectory = File(uploadDir)
         //创建文件
-        val destFile = File(Constants.FILE_UPLOAD_DIC + newFileName)
+        val destFile = File(uploadDir + newFileName)
         try {
             if (!fileDirectory.exists()) {
                 if (!fileDirectory.mkdir()) {

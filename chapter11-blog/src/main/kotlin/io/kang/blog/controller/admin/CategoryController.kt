@@ -33,7 +33,7 @@ class CategoryController {
             return ResultGenerator.genFailResult("参数异常！")
         }
         val pageUtil = PageQueryUtil(params)
-        return ResultGenerator.genSuccessResult(categoryService!!.getBlogCategoryPage(pageUtil))
+        return ResultGenerator.genSuccessResult(categoryService.getBlogCategoryPage(pageUtil))
     }
 
     /**

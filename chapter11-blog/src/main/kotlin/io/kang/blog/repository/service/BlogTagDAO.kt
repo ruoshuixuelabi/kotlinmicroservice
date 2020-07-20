@@ -50,12 +50,12 @@ class BlogTagDAO {
     }
 
 
-    fun selectByTagName(tagName: String): BlogTag {
+    fun selectByTagName(tagName: String): BlogTag? {
         val qBlogTag = QBlogTag.blogTag
 
         return queryFactory.selectFrom(qBlogTag)
                 .where(qBlogTag.tagName.eq(tagName).and(qBlogTag.isDeleted.eq(0)))
-                .fetchFirst()
+                .fetchOne()
     }
 
 
